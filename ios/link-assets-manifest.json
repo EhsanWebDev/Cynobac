@@ -1,0 +1,85 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Sora-Bold.ttf",
+      "sha1": "34256bc34281fd98b79f1831caffa5fb488fbbcb"
+    },
+    {
+      "path": "assets/fonts/Sora-ExtraBold.ttf",
+      "sha1": "9026b1669b534be2b28ae6d1d53788635be04645"
+    },
+    {
+      "path": "assets/fonts/Sora-ExtraLight.ttf",
+      "sha1": "9e80f3a58df781f02bcc9547654fd25ff9c42a49"
+    },
+    {
+      "path": "assets/fonts/Sora-Light.ttf",
+      "sha1": "9600b6bc8970090fc07fee518acdd8c6be1fb786"
+    },
+    {
+      "path": "assets/fonts/Sora-Medium.ttf",
+      "sha1": "b7f98444ddcf0db8b8d07dab317cef6c154d748a"
+    },
+    {
+      "path": "assets/fonts/Sora-Regular.ttf",
+      "sha1": "700024d4267334e6cec28523f213bf5c69c5a222"
+    },
+    {
+      "path": "assets/fonts/Sora-SemiBold.ttf",
+      "sha1": "4c51809302b5ccfe357c2d3cef713e196c2bdc3a"
+    },
+    {
+      "path": "assets/fonts/Sora-Thin.ttf",
+      "sha1": "212f3f6c25b77a47579e1986a63b926aa72b22d8"
+    },
+    {
+      "path": "assets/fonts/SourceSansPro-Black.ttf",
+      "sha1": "7c1967196995951e3150a2943e8ed87bde9de923"
+    },
+    {
+      "path": "assets/fonts/SourceSansPro-BlackIt.ttf",
+      "sha1": "3738cfde3c468586f4b2d02d0076a7df54e19ede"
+    },
+    {
+      "path": "assets/fonts/SourceSansPro-Bold.ttf",
+      "sha1": "550fab8dfdcadddcecc417c646fb24be14bde7d8"
+    },
+    {
+      "path": "assets/fonts/SourceSansPro-BoldIt.ttf",
+      "sha1": "ecd6da68962e24df7fbc4c7d4af5ba0b976c9302"
+    },
+    {
+      "path": "assets/fonts/SourceSansPro-ExtraLight.ttf",
+      "sha1": "2d3fcd30884f6f029378eed575aad31f170db51e"
+    },
+    {
+      "path": "assets/fonts/SourceSansPro-ExtraLightIt.ttf",
+      "sha1": "19c15ad46872083e117b1d10aaa9e24440616a78"
+    },
+    {
+      "path": "assets/fonts/SourceSansPro-It.ttf",
+      "sha1": "dd243297d7729786c2dad10488c254522d5fa945"
+    },
+    {
+      "path": "assets/fonts/SourceSansPro-Light.ttf",
+      "sha1": "34b6d40dbfbc8f0bad0f26809fea42fd32847309"
+    },
+    {
+      "path": "assets/fonts/SourceSansPro-LightIt.ttf",
+      "sha1": "3fc9679d56516ea738bf863519bd98b877733870"
+    },
+    {
+      "path": "assets/fonts/SourceSansPro-Regular.ttf",
+      "sha1": "8b3b1452c62e3d185315ee3c1598e24728157f46"
+    },
+    {
+      "path": "assets/fonts/SourceSansPro-Semibold.ttf",
+      "sha1": "bc38a1ae0698ae36c4d3f23132036814db3f343f"
+    },
+    {
+      "path": "assets/fonts/SourceSansPro-SemiboldIt.ttf",
+      "sha1": "659b37792c3747272fbe3bbfe179946ea945dee1"
+    }
+  ]
+}
