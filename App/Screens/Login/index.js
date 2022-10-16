@@ -87,7 +87,6 @@ const Login = ({navigation}) => {
               rightIcon={showPass ? 'eye-off' : 'eye'}
               onPressRightIcon={() => setShowPass(show => !show)}
             />
-            {/* navigation.navigate('EmailVerification'); */}
             <TouchableOpacity
               onPress={() => onPressRegistration('ForgotPassword')}>
               <CustomText

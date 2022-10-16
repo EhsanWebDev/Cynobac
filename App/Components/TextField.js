@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
-import {Box, Input} from 'native-base';
+import {Input} from 'native-base';
 import {Icon} from 'react-native-elements';
 import {GlobalStyles, Fonts, Colors} from '@common';
 import {CustomText} from '@Typography';

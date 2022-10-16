@@ -1,22 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {
-  View,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  Pressable,
-  Platform,
-} from 'react-native';
-import {Languages, Images, Colors} from '@common';
+import React, {useRef, useState} from 'react';
+import {View, SafeAreaView, TouchableOpacity} from 'react-native';
+import {Languages, Images} from '@common';
 import {SolidButton} from '@Buttons';
-import {RegularText, XXLText, TextWithImage, CustomText} from '@Typography';
+import {TextWithImage, CustomText} from '@Typography';
 import styles from './styles';
-import UserActions from '../../Redux/User/reducer';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Icon} from 'react-native-elements';
 import Swiper from 'react-native-swiper';
 import {
   OnboardingFirstImg,
@@ -25,24 +12,12 @@ import {
 } from '../../../assets/SVGs';
 
 const LoginRegistration = ({navigation}) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [otpValue, setOtpValue] = useState();
-  const [deviceToken, setDeviceToken] = useState();
-  const dispatch = useDispatch();
-  const onPressOtp = () => {
-    setModalVisible(true);
-  };
-  // useEffect(() => {
-  //   Languages.setLanguage('fr');
-  // }, []);
+  const swiperRef = useRef();
+  const [slideIndex, setSlideIndex] = useState(0);
+
   const onPressButton = nav => {
     navigation.navigate(nav);
   };
-  const onPressRegistration = () => {
-    navigation.navigate('Registration');
-  };
-  const swiperRef = useRef();
-  const [slideIndex, setSlideIndex] = useState(0);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -131,53 +106,6 @@ const LoginRegistration = ({navigation}) => {
         onPress={() => onPressButton('Login')}>
         <CustomText title="Skip" />
       </TouchableOpacity>
-
-      {/* <View style={styles.container}>
-        <View style={styles.headingContainer}>
-          <XXLText textStyle={styles.heading}>{Languages.cynobac}</XXLText>
-        </View>
-
-        <View style={styles.buttonContainer}>
-          <SolidButton
-            title={Languages.login}
-            textStyle={styles.buttonText}
-            buttonStyle={styles.buttonLogin}
-            onPress={() => onPressButton('Login')}
-          />
-          <SolidButton
-            title={Languages.createNewAccount}
-            buttonStyle={styles.buttonRegistration}
-            onPress={() => onPressButton('Registration')}
-          />
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('Settings', {
-                previousScreen: 'LoginRegistration',
-              })
-            }>
-            <Icon
-              containerStyle={styles.languageIcon}
-              type="material"
-              name="translate"
-              color={Colors.white}
-              size={35}
-            />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.footerContainer}>
-          <TextWithImage
-            source={Images.forwardArrowWhite}
-            onPress={() => onPressButton('ContactUs')}>
-            {Languages.contactUs}
-          </TextWithImage>
-          <TextWithImage
-            containerStyle={styles.textContainerStyle}
-            source={Images.forwardArrowWhite}>
-            {Languages.faq}
-          </TextWithImage>
-        </View>
-      </View> */}
     </SafeAreaView>
   );
 };

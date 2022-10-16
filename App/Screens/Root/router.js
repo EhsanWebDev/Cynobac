@@ -2,11 +2,13 @@ import React, {useEffect} from 'react';
 import {navigationRef, isMountedRef} from '../../Utils/rNavigation';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {Icon} from 'react-native-elements';
-import {GlobalStyles, Colors, Images, Fonts, Languages} from '@common';
-import {Image, StyleSheet, View, Platform, Share} from 'react-native';
-import HeaderRight from '../../Components/HeaderRight';
+import {Languages} from '@common';
+import {StyleSheet} from 'react-native';
+
 import HeaderLeft from '../../Components/HeaderLeft';
 
 // Auth Flow
@@ -27,42 +29,11 @@ import ContactUs from '../ContactUs';
 import Profile from '../Profile';
 import ChangePassword from '../ChangePassword';
 import ForgotPassword from '../ForgotPassword';
-
-// Main Tab
-
-const RootStack = createStackNavigator();
+import AppMainNavigator from './AppTabsNav/AppTabsNav';
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
 
-const headerRightBlank = () => {
-  return <View styles={{weidth: 40, height: 30}}></View>;
-};
-const headerLeftBlank = () => {
-  return <View styles={{weidth: 30, height: 30}}></View>;
-};
-
-const headerOption = {
-  headerStyle: {
-    // backgroundColor: Colors.red,
-    shadowRadius: 0,
-    elevation: 0,
-    shadowOpacity: 0,
-    shadowOffset: {
-      height: 0,
-    },
-  },
-  headerTitleStyle: {
-    color: Colors.black,
-    fontSize: 19,
-    // fontFamily: Fonts.type.regular,
-    alignSelf: 'center',
-    // flex: 1,
-  },
-  headerTintColor: Colors.red,
-};
-
-const createMainStack = () => (
+const MainStack = () => (
   <Stack.Navigator screenOptions={{headerShown: false}}>
     <Stack.Screen
       name="Splash"
@@ -103,11 +74,6 @@ const createMainStack = () => (
         headerLeft: () => (
           <HeaderLeft backButton={true} navigation={navigation} />
         ),
-        // headerRight: () => (
-        //   <HeaderRight
-        //     onPressNotification={() => navigation.navigate("Notifications")}
-        //   />
-        // ),
       })}
     />
     <Stack.Screen
@@ -118,16 +84,12 @@ const createMainStack = () => (
         headerLeft: () => (
           <HeaderLeft backButton={true} navigation={navigation} />
         ),
-        // headerRight: () => (
-        //   <HeaderRight
-        //     onPressNotification={() => navigation.navigate("Notifications")}
-        //   />
-        // ),
       })}
     />
+    {/* <Stack.Screen name="Home" component={AppMainNavigator} /> */}
     <Stack.Screen
       name="Home"
-      component={Home}
+      component={AppMainNavigator}
       options={({navigation, route}) => ({
         headerShown: false,
         title: 'Home',
@@ -173,16 +135,7 @@ const createMainStack = () => (
         ),
       })}
     />
-    <Stack.Screen
-      name="MyEntry"
-      component={MyEntry}
-      // options={({navigation, route, props}) => ({
-      //   title: 'My Entry',
-      //   headerLeft: () => (
-      //     <HeaderLeft backButton={true} navigation={navigation} />
-      //   ),
-      // })}
-    />
+    <Stack.Screen name="MyEntry" component={MyEntry} />
     <Stack.Screen
       name="MyEntryDetails"
       component={MyEntryDetails}
@@ -245,14 +198,7 @@ export default () => {
   }, []);
   return (
     <NavigationContainer ref={navigationRef}>
-      {createMainStack()}
+      <MainStack />
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  imageStyle: {
-    height: 25,
-    width: 25,
-  },
-});
