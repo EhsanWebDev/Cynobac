@@ -2,12 +2,7 @@ import React, {useEffect} from 'react';
 import {navigationRef, isMountedRef} from '../../Utils/rNavigation';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {Icon} from 'react-native-elements';
 import {Languages} from '@common';
-import {StyleSheet} from 'react-native';
 
 import HeaderLeft from '../../Components/HeaderLeft';
 
@@ -17,7 +12,6 @@ import LoginRegistration from '../LoginRegistration';
 import Login from '../Login';
 import Registration from '../Registration';
 import EmailVerification from '../EmailVerification';
-import Home from '../Home';
 import SubmitReport from '../SubmitReport';
 import MyEntry from '../MyEntry';
 import MyEntryDetails from '../MyEntryDetails';
@@ -86,7 +80,6 @@ const MainStack = () => (
         ),
       })}
     />
-    {/* <Stack.Screen name="Home" component={AppMainNavigator} /> */}
     <Stack.Screen
       name="Home"
       component={AppMainNavigator}

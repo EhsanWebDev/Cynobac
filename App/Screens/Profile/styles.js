@@ -4,9 +4,10 @@ import {Colors, Fonts} from '@common';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    backgroundColor: Colors.lightGray,
+    backgroundColor: Colors.white,
   },
+  innerContainer: {marginHorizontal: 20, marginTop: 20},
+  inputContainer: {marginVertical: 36},
   heading: {
     color: Colors.red,
     marginTop: 30,
@@ -23,7 +24,7 @@ export default StyleSheet.create({
   },
   radioContainer: {
     justifyContent: 'space-between',
-    marginBottom:10
+    marginBottom: 10,
   },
   listItemCheckBoxStyle: {
     marginLeft: 0,
@@ -38,7 +39,7 @@ export default StyleSheet.create({
   haveAn: {
     color: Colors.darkGray,
   },
-  bottomContainer:{
+  bottomContainer: {
     borderRadius: 5,
     borderWidth: 1,
     borderColor: Colors.mediumGray,
@@ -46,16 +47,16 @@ export default StyleSheet.create({
     padding: 10,
     justifyContent: 'space-between',
   },
-  botttomViewContainer:{
-    flexDirection:'row',
+  botttomViewContainer: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical:10
+    marginVertical: 10,
   },
-  bottomImage:{
-    width:25,
-    height:15,
+  bottomImage: {
+    width: 25,
+    height: 15,
   },
-  bottomText:{
+  bottomText: {
     fontFamily: Fonts.type.semiBold,
-  }
+  },
 });

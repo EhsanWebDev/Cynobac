@@ -83,7 +83,7 @@ const AppTabs = () => (
             )}
           </>
         ),
-        // tabBarStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
       }}
     />
   </Tabs.Navigator>
@@ -95,8 +95,8 @@ const AppDrawer = () => (
     screenOptions={{
       headerShown: false,
       drawerType: 'front',
-      drawerPosition: 'right',
-      drawerStyle: {width: '90%'},
+      // drawerPosition: 'right',
+      drawerStyle: {width: '100%'},
     }}>
     <Drawer.Screen
       name="app_tabs"

@@ -5,8 +5,9 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.red,
-    // paddingHorizontal: 20,
   },
+  innerContainer: {marginHorizontal: 20, marginTop: 20},
+  inputContainer: {marginVertical: 36},
   headingText: {
     color: Colors.white,
     fontFamily: Fonts.type.bold,
