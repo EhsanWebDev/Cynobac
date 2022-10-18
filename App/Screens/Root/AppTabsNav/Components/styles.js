@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     marginHorizontal: GlobalStyles.Constants.sizes.lg,
+    marginTop: 20,
   },
   row: {flexDirection: 'row', alignItems: 'center'},
   rowSB: {

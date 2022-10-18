@@ -1,23 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {
-  View,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-// import { Container, Content } from 'native-base';
-import {Languages, Images} from '@common';
-import {SolidButton} from '@Buttons';
-import {RegularText, XXLText, TextWithImage, XLText} from '@Typography';
+import React from 'react';
+import {useSelector} from 'react-redux';
+import {View, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native';
+import {Languages, Images, Colors} from '@common';
+import {CustomText} from '@Typography';
 import styles from './styles';
-import UserActions from '../../Redux/User/reducer';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {MenuIcon} from '../../../assets/SVGs';
+import {ArrowWithCircle, MenuIcon} from '../../../assets/SVGs';
+import {Icon} from 'react-native-elements';
 
 const Home = ({navigation}) => {
-  const user = useSelector(state => state.user);
+  const store = useSelector(store => store);
+  const {user} = store || {};
 
   const onPress = screen => {
     navigation.navigate(screen);
@@ -25,69 +17,80 @@ const Home = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View style={styles.container}>
+      <View style={{flex: 1}}>
+        <View style={styles.innerContainer}>
           <TouchableOpacity onPress={() => navigation?.openDrawer()}>
-            <MenuIcon color="white" />
+            <MenuIcon color={Colors.primaryText} />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => onPress('Profile')}
-            style={styles.headingContainer}>
-            <XLText
-              textStyle={
-                styles.headingText
-              }>{`${Languages.welcome} ${user.name}`}</XLText>
-          </TouchableOpacity>
-          <View style={styles.buttonContainer}>
-            <TextWithImage
-              onPress={() => onPress('SubmitReport')}
-              containerStyle={styles.textContainerStyle}
-              imageStyle={styles.textImageStyle}
-              textStyle={styles.textStyle}
-              source={Images.forwardArrowWhite}>
-              {Languages.submitAReport}
-            </TextWithImage>
-            <TextWithImage
-              onPress={() => onPress('MyEntry')}
-              containerStyle={styles.textContainerStyle}
-              imageStyle={styles.textImageStyle}
-              textStyle={styles.textStyle}
-              source={Images.forwardArrowWhite}>
-              {Languages.myEntry}
-            </TextWithImage>
-            <TextWithImage
-              onPress={() => onPress('AboutProject')}
-              containerStyle={styles.textContainerStyle}
-              imageStyle={styles.textImageStyle}
-              textStyle={styles.textStyle}
-              source={Images.forwardArrowWhite}>
-              {Languages.aboutProject}
-            </TextWithImage>
-
-            <TextWithImage
-              onPress={() => onPress('Settings')}
-              containerStyle={styles.textContainerStyle}
-              imageStyle={styles.textImageStyle}
-              textStyle={styles.textStyle}
-              source={Images.forwardArrowWhite}>
-              {Languages.settings}
-            </TextWithImage>
+          <View style={styles.headingContainer}>
+            <CustomText size={24} bold title={`Hello ${user.firstname},`} />
+            <CustomText
+              color={Colors.primaryTextMuted}
+              title={'Welcome back!'}
+            />
           </View>
-          <View style={styles.footerContainer}>
-            <TextWithImage
-              source={Images.forwardArrowWhite}
-              onPress={() => onPress('ContactUs')}>
-              {Languages.contactUs}
-            </TextWithImage>
-            <TextWithImage
-              containerStyle={styles.textContainerStyle1}
-              source={Images.forwardArrowWhite}>
-              {Languages.faq}
-            </TextWithImage>
+          <TouchableOpacity
+            onPress={() => onPress('SubmitReport')}
+            style={styles.submitNewReportContainer}>
+            <CustomText
+              size={19}
+              bold
+              title={`Suspecting cyanobacteria?
+Submit new data`}
+            />
+            <View style={{alignItems: 'flex-end'}}>
+              <ArrowWithCircle />
+            </View>
+          </TouchableOpacity>
+          <View style={styles.seeAllContainer}>
+            <View style={styles.seeAllBar}>
+              <CustomText size={19} title="Recently submitted" bold />
+              <TouchableOpacity>
+                <CustomText title="See all" color={Colors.primaryTextMuted} />
+              </TouchableOpacity>
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
+              <View style={styles.reportItem}>
+                <View>
+                  <View style={styles.reportItemLabel}>
+                    <CustomText size={13} title="ID: 932480" />
+                  </View>
+                  <TouchableOpacity style={styles.reportItemButton}>
+                    <CustomText
+                      title={`-77.031456, 38.4567
+Sunrise buildin g, Near Roton\nSquare, 23452`}
+                    />
+                    <Icon
+                      name="chevron-right"
+                      size={26}
+                      color={Colors.primaryTextMuted}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={styles.reportItem}>
+                <View>
+                  <View style={styles.reportItemLabel}>
+                    <CustomText size={13} title="ID: 932480" />
+                  </View>
+                  <TouchableOpacity style={styles.reportItemButton}>
+                    <CustomText
+                      title={`-77.031456, 38.4567
+Sunrise buildin g, Near Roton\nSquare, 23452`}
+                    />
+                    <Icon
+                      name="chevron-right"
+                      size={26}
+                      color={Colors.primaryTextMuted}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </ScrollView>
           </View>
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

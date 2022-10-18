@@ -4,20 +4,20 @@ import {Colors, Fonts} from '@common';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.red,
+    backgroundColor: Colors.white,
   },
-  innerContainer: {marginHorizontal: 20, marginTop: 20},
+  innerContainer: {
+    flex: 1,
+    marginHorizontal: 20,
+    marginTop: 20,
+  },
   inputContainer: {marginVertical: 36},
   headingText: {
     color: Colors.white,
     fontFamily: Fonts.type.bold,
   },
   headingContainer: {
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.white,
-    paddingHorizontal: 20,
-    paddingTop: 30,
-    paddingBottom: 5,
+    marginTop: 28,
   },
   buttonContainer: {
     paddingHorizontal: 20,
@@ -40,5 +40,36 @@ export default StyleSheet.create({
   },
   textContainerStyle1: {
     marginTop: 20,
+  },
+  submitNewReportContainer: {
+    marginTop: 32,
+    backgroundColor: Colors.lightGreen,
+    borderRadius: 12,
+    padding: 20,
+  },
+  seeAllContainer: {marginTop: 48, flex: 1},
+  seeAllBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: 16,
+  },
+  reportItem: {marginTop: 16},
+  reportItemLabel: {
+    backgroundColor: Colors.lightParrot,
+    borderRadius: 12,
+    paddingHorizontal: 9,
+    paddingVertical: 5,
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+  },
+  reportItemButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 12,
+    paddingBottom: 16,
+    borderBottomColor: Colors.greenMuted,
+    borderBottomWidth: 1,
   },
 });

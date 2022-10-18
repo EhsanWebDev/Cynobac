@@ -18,5 +18,8 @@ export default {
   transparent: 'transparent',
   primaryText: '#262D26',
   primaryTextMuted: '#5F6268',
-  green: '#00B379',
+  green: 'rgb(0,179,121)',
+  greenMuted: 'rgba(0,179,121,0.15)',
+  lightGreen: '#CCF5D7',
+  lightParrot: 'rgba(226,232,161,0.5)',
 };
