@@ -1,21 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  View,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  ScrollView,
-} from 'react-native';
-// import { Container, Content } from 'native-base';
+import {View, SafeAreaView, ScrollView} from 'react-native';
 import {Languages, Images} from '@common';
-import {SolidButton} from '@Buttons';
-import {RegularText, XLText, TextWithImage, MediumText} from '@Typography';
+import {XLText, MediumText, CustomText} from '@Typography';
 import styles from './styles';
-import UserActions from '../../Redux/User/reducer';
-import TextField from '../../Components/TextField';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import OtherActions from '../../Redux/Other/reducer';
-
+import Header from '../../Components/Header/Header';
 const AboutProject = ({navigation}) => {
   const other = useSelector(state => state.other);
   const user = useSelector(state => state.user);
@@ -27,16 +17,17 @@ const AboutProject = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Header onBackPress={navigation.goBack} title="About us" />
+      </View>
       <ScrollView>
-        <View style={styles.headingContainer}>
-          <XLText
-            textStyle={styles.headingText}>{`${Languages.aboutUS}`}</XLText>
-        </View>
         {other.aboutUsData && other.aboutUsData.description && (
           <View style={styles.aboutUsContainer}>
-            <MediumText textStyle={styles.aboutUsText}>
+            <CustomText
+              title={`${other.aboutUsData.description}`}
+              textStyle={styles.aboutUsText}>
               {other.aboutUsData.description}
-            </MediumText>
+            </CustomText>
           </View>
         )}
       </ScrollView>

@@ -1,32 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  View,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-  Image,
-} from 'react-native';
-// import { Container, Content } from 'native-base';
+import {View, SafeAreaView, ScrollView} from 'react-native';
 import {Languages, Images, Colors} from '@common';
 import {SolidButton} from '@Buttons';
-import {RegularText, XLText, TextWithImage, MediumText} from '@Typography';
+import {CustomText} from '@Typography';
 import styles from './styles';
-import UserActions from '../../Redux/User/reducer';
-import TextField from '../../Components/TextField';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import MapView from 'react-native-maps';
-import {Marker} from 'react-native-maps';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
+
 import RadioButtonList from '../../Components/RadioButtonList';
 import OtherActions from '../../Redux/Other/reducer';
+import Header from '../../Components/Header/Header';
 
 const QuestionAndAnswer = ({navigation}) => {
   const user = useSelector(state => state.user);
   const other = useSelector(state => state.other);
+  const {submitReportData} = other || {};
+  const {imageData} = submitReportData || {};
 
   const [cynobacteriaSelectedItem, setCynobacteriaSelectedItem] =
     useState(null);
@@ -59,12 +47,12 @@ const QuestionAndAnswer = ({navigation}) => {
     // Languages.setLanguage(user.language);
   }, [user, user.language]);
   const onPressSubmit = async () => {
-    console.log('.other.submitReportData', other.submitReportData);
+    // console.log('.other.submitReportData', other.submitReportData);
 
     const res = new FormData();
 
-    other.submitReportData.imageData.forEach(file=>{
-      res.append('res[]', file);
+    imageData.forEach(file => {
+      res.append('res[]', file, file?.uri);
     });
     // res.append('res[]', other.submitReportData.imageData);
     res.append('address', other.submitReportData.address);
@@ -83,70 +71,74 @@ const QuestionAndAnswer = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        <View style={styles.headingContainer}>
-          <XLText
-            textStyle={
-              styles.headingText
-            }>{`${Languages.selectQAndAnswer}`}</XLText>
-        </View>
-
-        <View style={styles.questionContainer1}>
-          <MediumText textStyle={styles.questionText}>
-            {Languages.wharAreYouDoingHere}
-          </MediumText>
+      <View style={{marginTop: 20, marginBottom: 26, marginHorizontal: 20}}>
+        <Header onBackPress={navigation.goBack} title="Select your answers" />
+      </View>
+      <ScrollView>
+        <View style={{marginHorizontal: 20}}>
+          <CustomText
+            title={`Q.1 ${Languages.wharAreYouDoingHere}`}
+            bold
+            extraStyles={{marginBottom: 5}}
+          />
           <RadioButtonList
+            listItemCheckBoxStyle={styles.listItemCheckBoxStyle}
             labels={dataRadioWhatAreYouDoing}
+            radioContainerStyle={{flexDirection: 'column', marginTop: 12}}
+            listItemStyle={{marginBottom: 8}}
             currentSelected={whatAreYouDoingSelectedItem}
             onPress={index => setWhatAreYouDoingSelectedItem(index)}
             dataType="array"
-            radioContainerStyle={styles.radioContainerStyle}
-            listItemStyle={styles.listItemStyle}
-            listItemCheckBoxStyle={styles.listItemCheckBoxStyle}
           />
         </View>
-        <View style={styles.questionContainer}>
-          <MediumText textStyle={styles.questionText}>
-            {Languages.cynobatrialBloom}
-          </MediumText>
-          <View style={styles.radioContainer}>
-            <RadioButtonList
-              labels={dataRadioCynobacteria}
-              currentSelected={cynobacteriaSelectedItem}
-              onPress={index => setCynobacteriaSelectedItem(index)}
-              dataType="array"
-            />
-          </View>
+        <View style={{marginHorizontal: 20, marginTop: 24}}>
+          <CustomText
+            title={`Q.2 ${Languages.cynobatrialBloom}`}
+            bold
+            extraStyles={{marginBottom: 5}}
+          />
+          <RadioButtonList
+            listItemCheckBoxStyle={styles.listItemCheckBoxStyle}
+            labels={dataRadioCynobacteria}
+            radioContainerStyle={{flexDirection: 'column', marginTop: 12}}
+            listItemStyle={{marginBottom: 8}}
+            currentSelected={cynobacteriaSelectedItem}
+            onPress={index => setCynobacteriaSelectedItem(index)}
+            dataType="array"
+          />
         </View>
-        <View style={styles.questionContainer}>
-          <MediumText textStyle={styles.questionText}>
-            {Languages.substrate}
-          </MediumText>
-          <View style={styles.radioContainer}>
-            <RadioButtonList
-              labels={dataRadioSubstract}
-              currentSelected={substrateSelectedItem}
-              onPress={index => setSubstrateSelectedItem(index)}
-              dataType="array"
-            />
-          </View>
+        <View style={{marginHorizontal: 20, marginTop: 24}}>
+          <CustomText
+            title={`Q.3 ${Languages.substrate}`}
+            bold
+            extraStyles={{marginBottom: 5}}
+          />
+          <RadioButtonList
+            listItemCheckBoxStyle={styles.listItemCheckBoxStyle}
+            labels={dataRadioSubstract}
+            radioContainerStyle={{flexDirection: 'column', marginTop: 12}}
+            listItemStyle={{marginBottom: 8}}
+            currentSelected={substrateSelectedItem}
+            onPress={index => setSubstrateSelectedItem(index)}
+            dataType="array"
+          />
         </View>
-        <View style={styles.questionContainer}>
-          <MediumText textStyle={styles.questionText}>
-            {Languages.weaterConditions}
-          </MediumText>
-          <View style={styles.radioContainer}>
-            <RadioButtonList
-              labels={dataRadioWeather}
-              currentSelected={weatherSelectedItem}
-              onPress={index => setWeatherSelectedItem(index)}
-              dataType="array"
-              radioContainerStyle={styles.radioContainerStyle}
-              listItemStyle={styles.listItemStyle}
-            />
-          </View>
+        <View style={{marginHorizontal: 20, marginTop: 24}}>
+          <CustomText
+            title={`Q.4 ${Languages.weaterConditions}`}
+            bold
+            extraStyles={{marginBottom: 5}}
+          />
+          <RadioButtonList
+            listItemCheckBoxStyle={styles.listItemCheckBoxStyle}
+            labels={dataRadioWeather}
+            radioContainerStyle={{flexDirection: 'column', marginTop: 12}}
+            listItemStyle={{marginBottom: 8}}
+            currentSelected={weatherSelectedItem}
+            onPress={index => setWeatherSelectedItem(index)}
+            dataType="array"
+          />
         </View>
-
         {cynobacteriaSelectedItem !== null &&
           substrateSelectedItem !== null &&
           weatherSelectedItem !== null &&
@@ -159,7 +151,7 @@ const QuestionAndAnswer = ({navigation}) => {
               />
             </View>
           )}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

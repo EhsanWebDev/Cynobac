@@ -1,24 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  View,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  ScrollView,
-} from 'react-native';
-// import { Container, Content } from 'native-base';
+import {View, SafeAreaView, ScrollView} from 'react-native';
 import {Languages, Images} from '@common';
-import {SolidButton} from '@Buttons';
-import {RegularText, XLText, TextWithImage, MediumText} from '@Typography';
+import {CustomText} from '@Typography';
 import styles from './styles';
-import UserActions from '../../Redux/User/reducer';
-import TextField from '../../Components/TextField';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import OtherActions from '../../Redux/Other/reducer';
+import Header from '../../Components/Header/Header';
+import {Icon} from 'react-native-elements';
+import Colors from '../../Common/Colors';
 
 const ContactUs = ({navigation}) => {
   const user = useSelector(state => state.user);
-
   const {contactUsData} = useSelector(state => state.other);
 
   const dispatch = useDispatch();
@@ -29,32 +21,31 @@ const ContactUs = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Header onBackPress={navigation.goBack} title="Contact us" />
+      </View>
       <ScrollView>
-        {contactUsData?.mobile_no && (
-          <View style={styles.headingContainer}>
-            <XLText
-              textStyle={
-                styles.headingText
-              }>{`${Languages.phone} ${contactUsData.mobile_no}`}</XLText>
-          </View>
-        )}
-        {contactUsData?.description && (
-          <View style={styles.aboutUsContainer}>
-            <MediumText textStyle={styles.aboutUsText}>
-              {contactUsData.description}
-            </MediumText>
-          </View>
-        )}
-        <View style={[styles.headingContainer, {borderBottomWidth: 0}]}>
-          <XLText textStyle={styles.headingText}>{`${Languages.faq}`}</XLText>
-        </View>
-        <View style={styles.aboutUsContainer}>
-          <MediumText textStyle={styles.aboutUsText}>
-            {'Key questions and answers about Cynobac'}
-          </MediumText>
-          <MediumText textStyle={styles.aboutUsText}>
-            {'About the FAQs'}
-          </MediumText>
+        <View style={styles.descContainer}>
+          {contactUsData?.mobile_no && (
+            <View style={styles.headingContainer}>
+              <View style={styles.iconContainer}>
+                <Icon name="phone-call" type="feather" color={Colors.white} />
+              </View>
+              <View style={styles.mtop}>
+                <CustomText size={19} bold title="Call us" />
+                <CustomText
+                  extraStyles={{marginTop: 12}}
+                  color={Colors.primaryTextMuted}
+                  title={`${contactUsData.mobile_no}`}
+                />
+                <CustomText
+                  extraStyles={styles.mtop}
+                  color={Colors.primaryTextMuted}
+                  title={`${contactUsData.description}`}
+                />
+              </View>
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

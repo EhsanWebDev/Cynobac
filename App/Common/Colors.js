@@ -9,7 +9,7 @@ export default {
   gray: '#616161',
   darkGray: '#616161',
   mediumGray: '#D9D9D9',
-  lightGray: '#E2E2E',
+  lightGray: '#E2E2Ee',
   red: '#9A0941',
   lightRed: '#C9024F',
   app_background: '#FFFFFF',
@@ -22,4 +22,7 @@ export default {
   greenMuted: 'rgba(0,179,121,0.15)',
   lightGreen: '#CCF5D7',
   lightParrot: 'rgba(226,232,161,0.5)',
+  lighterGreen: 'rgba(0,179,121,0.35)',
+  lighterRed: 'rgba(232,26,26,0.35)',
+  marble: '#F7F8FA',
 };

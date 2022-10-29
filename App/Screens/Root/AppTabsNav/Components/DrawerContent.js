@@ -12,8 +12,7 @@ import UserActions from '../../../../Redux/User/reducer';
 
 function DrawerContent({navigation, ...rest}) {
   const dispatch = useDispatch();
-  const {firstname, lastname} = useSelector(store => store.user);
-  // console.log({user});
+  const {firstname, lastname, role, ...user} = useSelector(store => store.user);
 
   const onPressLogout = async () => {
     const confirm = await AlertApi.confirm(
@@ -29,12 +28,15 @@ function DrawerContent({navigation, ...rest}) {
 
   const reset = () => {
     dispatch(UserActions.resetUser());
+    navigation?.closeDrawer();
     navigation.navigate('LoginRegistration');
   };
 
-  const navigate = name => {
-    navigation?.navigate(name);
+  const navigate = (name, params) => {
+    navigation?.navigate(name, params);
   };
+  const isAdmin = role === 'Admin';
+  console.log({isAdmin});
 
   return (
     <SafeAreaView style={styles.container} {...rest}>
@@ -69,29 +71,43 @@ function DrawerContent({navigation, ...rest}) {
         <NavItem
           title="Home"
           Icon={<HomeIcon />}
-          onPress={() => navigation?.closeDrawer()}
+          onPress={() => navigate('home')}
         />
+        {!isAdmin && (
+          <>
+            <NavItem
+              title="Submit new data"
+              Icon={<Icon type="feather" name="upload" />}
+              onPress={() => navigate('SubmitReport')}
+            />
+          </>
+        )}
+
         <NavItem
-          title="Submit new data"
-          Icon={<Icon type="feather" name="upload" />}
-          onPress={() => navigate('SubmitReport')}
-        />
-        <NavItem
-          title="My data"
+          title={isAdmin ? 'Submissions' : 'My data'}
           Icon={<Icon type="antdesign" name="folderopen" />}
-          onPress={() => navigate('MyEntry')}
+          onPress={() =>
+            navigate('MyEntry', {screenTitle: isAdmin ? 'Entries' : 'My data'})
+          }
         />
         <NavItem
           title="About project"
           Icon={<Icon name="info-outline" />}
           onPress={() => navigate('AboutProject')}
         />
+        {!isAdmin && (
+          <NavItem
+            title="Contact us"
+            Icon={<ChatIcon />}
+            onPress={() => navigate('ContactUs')}
+          />
+        )}
+
         <NavItem
-          title="Contact us"
-          Icon={<ChatIcon />}
-          onPress={() => navigate('ContactUs')}
+          title="FAQ"
+          Icon={<FaqIcon />}
+          onPress={() => navigate('FAQ')}
         />
-        <NavItem title="FAQ" Icon={<FaqIcon />} />
         <NavItem
           title="Settings"
           Icon={<Icon type="antdesign" name="setting" />}

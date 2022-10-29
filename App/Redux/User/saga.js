@@ -22,11 +22,12 @@ function* login(res) {
           ...data.data,
         }),
       );
-      if (data.data.role === 'Public Testers') {
-        yield call(navigate, 'Home');
-      } else {
-        yield call(navigate, 'MyEntry');
-      }
+      // if (data.data.role === 'Public Testers') {
+      yield call(navigate, 'Home');
+      // }
+      // else {
+      //   yield call(navigate, 'MyEntry');
+      // }
     }
   } catch (e) {
     console.log('errorinCatch', e);
@@ -152,7 +153,6 @@ function* forgotPassword(res) {
     yield put(AppActions.error(e));
   }
 }
-
 
 export default [
   takeLatest(UserTypes.LOGIN, login),

@@ -1,46 +1,56 @@
-import { StyleSheet } from 'react-native';
-import { Colors, Fonts } from '@common';
+import {Dimensions, StyleSheet} from 'react-native';
+import {Colors, Fonts} from '@common';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    // paddingHorizontal: 20,
-    backgroundColor: Colors.lightGray,
+    backgroundColor: Colors.white,
+  },
+  innerContainer: {
+    marginHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
   },
   headingText: {
     color: Colors.red,
     fontFamily: Fonts.type.light,
   },
   headingContainer: {
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.mediumGray,
-    padding: 20,
+    backgroundColor: Colors.inputBG,
+    width: Dimensions.get('window').width / 3.8,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+    marginVertical: 12,
   },
   textStyle: {
     color: Colors.darkGray,
     marginVertical: 5,
   },
   submit: {
-    // position :'absolute',
-    // bottom:0,
-    // margin: 30
-    marginVertical: 15, 
-    marginHorizontal: 15
+    marginVertical: 15,
+    marginHorizontal: 15,
   },
-  listItem:{
-   marginTop:10
+  listItem: {
+    marginTop: 10,
   },
-  listImage:{
-    width: '100%',
-    height: 200
+  listImage: {
+    // maxWidth: Dimensions.get('window').width / 3,
+    width: Dimensions.get('window').width / 3.8,
+    height: 100,
+    borderRadius: 12,
+    marginVertical: 12,
   },
   headerContainer: {
     // width: '100%',
     // backgroundColor:'red'
-    // position :'absolute', 
+    // position :'absolute',
     // bottom: 10
   },
-  flatListMainContainer:{
-    flex:1
+  flatListMainContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
   },
 });

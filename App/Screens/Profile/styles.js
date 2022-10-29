@@ -7,7 +7,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
   },
   innerContainer: {marginHorizontal: 20, marginTop: 20},
-  inputContainer: {marginVertical: 36},
+  inputContainer: {marginVertical: 32},
   heading: {
     color: Colors.red,
     marginTop: 30,
@@ -58,5 +58,19 @@ export default StyleSheet.create({
   },
   bottomText: {
     fontFamily: Fonts.type.semiBold,
+  },
+  avatarContainer: {alignItems: 'center', marginTop: 32},
+  avatar: {width: 100, height: 100, borderRadius: 50},
+  camIcon: {
+    backgroundColor: Colors.green,
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 115,
+    borderWidth: 2,
+    borderColor: 'white',
   },
 });

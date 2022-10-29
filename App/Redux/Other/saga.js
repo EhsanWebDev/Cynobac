@@ -1,11 +1,10 @@
-import { call, put, takeLatest, select } from "redux-saga/effects";
-import { Share } from "react-native";
-import Actions, { OtherTypes, other } from "./reducer";
-import AppActions, { app } from "../Root/reducer";
-import { navigate, popToTop, goBack } from "../../Utils/rNavigation";
+import {call, put, takeLatest, select} from 'redux-saga/effects';
+import {Share} from 'react-native';
+import Actions, {OtherTypes, other} from './reducer';
+import AppActions, {app} from '../Root/reducer';
+import {navigate, popToTop, goBack} from '../../Utils/rNavigation';
 import CynobacApis from '../../Services/CynobacApis';
-import UserAction, { currentUser } from "../User/reducer";
-
+import UserAction, {currentUser} from '../User/reducer';
 
 function* submitReport(res) {
   try {
@@ -13,7 +12,7 @@ function* submitReport(res) {
     const data = yield call(CynobacApis.submitReport, res.payload);
     if (data) {
       yield put(AppActions.loading(false));
-      yield call(navigate, 'MyEntry');
+      yield call(navigate, 'SuccessScreen');
     }
   } catch (e) {
     yield put(AppActions.error(e));
@@ -36,7 +35,7 @@ function* aboutUs(res) {
   try {
     yield put(AppActions.loading(true));
     const data = yield call(CynobacApis.aboutUs, res.payload);
-    console.log("data", data);
+    console.log('data', data);
     if (data) {
       yield put(AppActions.loading(false));
       yield put(Actions.aboutUsData(data.data));
@@ -51,7 +50,7 @@ function* updateStatus(res) {
   try {
     yield put(AppActions.loading(true));
     const data = yield call(CynobacApis.updateStatus, res.payload);
-    console.log("data", data);
+    console.log('data', data);
     if (data) {
       yield put(AppActions.loading(false));
       yield myEntry({language: 'en'});
@@ -68,14 +67,13 @@ function* contactUs(res) {
     const data = yield call(CynobacApis.contactUs, res.payload);
     if (data) {
       yield put(AppActions.loading(false));
-      console.log("dataC", data.data);
+      console.log('dataC', data.data);
       yield put(Actions.contactUsData(data.data));
     }
   } catch (e) {
     yield put(AppActions.error(e));
   }
 }
-
 
 export default [
   takeLatest(OtherTypes.SUBMIT_REPORT, submitReport),

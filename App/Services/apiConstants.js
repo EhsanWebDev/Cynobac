@@ -17,5 +17,4 @@ export default {
   UPDATE_PROFILE: 'update-profile',
   CHANGE_PASSWORD: 'change-password',
   FORGOT_PASSWORD: 'forgot-password',
-
 };

@@ -1,23 +1,22 @@
-import { StyleSheet } from 'react-native';
-import { Colors, Fonts } from '@common';
+import {StyleSheet} from 'react-native';
+import {Colors, Fonts} from '@common';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    // paddingHorizontal: 20,
-    backgroundColor: Colors.lightGray,
+    backgroundColor: Colors.white,
   },
   autocompleteContainer: {
-    flex: 1,
+    // flex: 1,
     width: '95%',
     // height: 300,
-    position: 'absolute',
-    top: 10,
+    // position: 'absolute',
+    // bottom: 140,
     alignSelf: 'center',
     zIndex: 1,
   },
   mapViewStyle: {
-    flex: 1,
+    flex: 0.85,
   },
   textStyle: {
     color: Colors.darkGray,
@@ -25,7 +24,7 @@ export default StyleSheet.create({
   },
   submit: {
     // margin: 30
-    marginVertical: 15, 
-    marginHorizontal: 15,
+    marginTop: 20,
+    // marginHorizontal: 15,
   },
 });

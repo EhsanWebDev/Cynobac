@@ -1,25 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  View,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  ScrollView,
-  NativeModules,
-  DevSettings,
-} from 'react-native';
+import {View, SafeAreaView} from 'react-native';
 // import { Container, Content } from 'native-base';
 import {Languages, Images, Colors} from '@common';
 import {SolidButton} from '@Buttons';
-import {RegularText, XLText, TextWithImage, MediumText} from '@Typography';
+import {CustomText} from '@Typography';
 import styles from './styles';
 import UserActions from '../../Redux/User/reducer';
-import TextField from '../../Components/TextField';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import MapView from 'react-native-maps';
-import {Marker} from 'react-native-maps';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import RadioButtonList from '../../Components/RadioButtonList';
+import Header from '../../Components/Header/Header';
 
 const Settings = ({route, navigation}) => {
   const user = useSelector(state => state.user);
@@ -48,15 +37,14 @@ const Settings = ({route, navigation}) => {
 
     setSelectedLanguage(value);
   }, [user, user.language]);
-  const onLanguageSelect = index => {
-    setSelectedLanguage(index);
-    if (index === 0) {
+  const onLanguageSelect = () => {
+    if (selectedLanguage === 0) {
       dispatch(UserActions.setLanguage('fr'));
       Languages.setLanguage('fr');
-    } else if (index === 1) {
+    } else if (selectedLanguage === 1) {
       dispatch(UserActions.setLanguage('en'));
       Languages.setLanguage('en');
-    } else if (index === 2) {
+    } else if (selectedLanguage === 2) {
       dispatch(UserActions.setLanguage('it'));
       Languages.setLanguage('it');
     } else {
@@ -90,12 +78,12 @@ const Settings = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Header onBackPress={navigation.goBack} title="Settings" />
+      </View>
       <View style={styles.container}>
         <View style={styles.headingContainer}>
-          <XLText
-            textStyle={
-              styles.headingText
-            }>{`${Languages.selectLanguage}`}</XLText>
+          <CustomText title={`${Languages.selectLanguage}`} bold />
         </View>
         <View style={styles.radioContainer}>
           <RadioButtonList
@@ -103,11 +91,16 @@ const Settings = ({route, navigation}) => {
             listItemStyle={styles.listItemStyle}
             labels={dataRadioLanguage}
             currentSelected={selectedLanguage}
-            onPress={index => onLanguageSelect(index)}
+            onPress={index => setSelectedLanguage(index)}
             dataType="array"
           />
         </View>
       </View>
+      <SolidButton
+        buttonStyle={{marginHorizontal: 20, marginBottom: 12}}
+        title={'Save changes'}
+        onPress={onLanguageSelect}
+      />
     </SafeAreaView>
   );
 };

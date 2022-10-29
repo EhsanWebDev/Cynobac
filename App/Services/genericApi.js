@@ -91,31 +91,6 @@ export const patch = (endPoint, data) => {
 };
 
 export const postMultipart = (endPoint, data) => {
-  console.log;
-  // return new Promise((resolve, reject) => {
-  //   axios({
-  //     url: `${base_url}${endPoint}`,
-  //     method: 'POST',
-  //     data: data,
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'multipart/form-data',
-  //       // Authorization: api.defaults.headers.common['Authorization'],
-  //       Authorization: api.defaults.headers.Authorization,
-  //     },
-  //   })
-  //     .then(res => {
-  //       console.log(
-  //         'API POST Multipart Response ------------------>   ' +
-  //           JSON.stringify(res.data),
-  //       );
-  //       return resolve(res);
-  //     })
-  //     .catch(error => {
-  //       console.log({...error}, 'Server error');
-  //       return resolve(error.response);
-  //     });
-  // });
   return new Promise((resolve, reject) => {
     fetch(`${base_url}${endPoint}`, {
       method: 'POST',
@@ -129,6 +104,7 @@ export const postMultipart = (endPoint, data) => {
       .then(response => response.json())
       .then(res => {
         console.log(res, 'Server error');
+        console.log({token: api.defaults.headers.Authorization});
         console.log(
           'API POST Multipart Response ------------------>   ' +
             JSON.stringify(res),

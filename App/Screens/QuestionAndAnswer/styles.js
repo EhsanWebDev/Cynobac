@@ -5,7 +5,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     // paddingHorizontal: 20,
-    backgroundColor: Colors.lightGray,
+    backgroundColor: Colors.white,
   },
   headingText: {
     color: Colors.red,
@@ -27,11 +27,7 @@ export default StyleSheet.create({
     marginVertical: 15,
     marginHorizontal: 15,
   },
-  buttonContainer: {
-    position: 'absolute',
-    width: '100%',
-    bottom: 0,
-  },
+  buttonContainer: {},
   questionContainer: {
     borderRadius: 5,
     borderWidth: 1,
@@ -61,5 +57,5 @@ export default StyleSheet.create({
   listItemStyle: {width: '50%', marginTop: 10},
   listItemCheckBoxStyle: {
     marginLeft: -2,
-  }
+  },
 });

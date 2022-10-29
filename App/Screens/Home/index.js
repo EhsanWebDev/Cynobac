@@ -1,19 +1,42 @@
-import React from 'react';
-import {useSelector} from 'react-redux';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {View, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native';
-import {Languages, Images, Colors} from '@common';
+import {Colors} from '@common';
 import {CustomText} from '@Typography';
 import styles from './styles';
 import {ArrowWithCircle, MenuIcon} from '../../../assets/SVGs';
-import {Icon} from 'react-native-elements';
+import ReportItem from '../../Components/ReportItem/ReportItem';
+import OtherActions from '../../Redux/Other/reducer';
 
 const Home = ({navigation}) => {
+  const dispatch = useDispatch();
   const store = useSelector(store => store);
-  const {user} = store || {};
+  const {user, other} = store || {};
+  const {myEntryData} = other || {};
+  const {role} = user || {};
+  const isAdmin = role === 'Admin';
+
+  useEffect(() => {
+    dispatch(OtherActions.myEntry({language: user?.language}));
+  }, [dispatch, user]);
 
   const onPress = screen => {
     navigation.navigate(screen);
   };
+  const onReportPress = item => {
+    dispatch(
+      OtherActions.myEntrySelectedData({
+        item,
+        tabChangeIndex: 0,
+      }),
+    );
+    navigation.navigate('MyEntryDetails');
+  };
+
+  const newEntries = (myEntryData || []).reduce(
+    (total, item) => (item?.status === 'Pending' ? total + 1 : total + 0),
+    0,
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -31,13 +54,18 @@ const Home = ({navigation}) => {
             />
           </View>
           <TouchableOpacity
-            onPress={() => onPress('SubmitReport')}
+            onPress={() => onPress(isAdmin ? 'MyEntry' : 'SubmitReport')}
             style={styles.submitNewReportContainer}>
             <CustomText
               size={19}
               bold
-              title={`Suspecting cyanobacteria?
-Submit new data`}
+              title={
+                isAdmin
+                  ? `New submissions: ${newEntries}
+Tap to review`
+                  : `Suspecting cyanobacteria?
+Submit new data`
+              }
             />
             <View style={{alignItems: 'flex-end'}}>
               <ArrowWithCircle />
@@ -46,47 +74,26 @@ Submit new data`}
           <View style={styles.seeAllContainer}>
             <View style={styles.seeAllBar}>
               <CustomText size={19} title="Recently submitted" bold />
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => onPress('MyEntry')}>
                 <CustomText title="See all" color={Colors.primaryTextMuted} />
               </TouchableOpacity>
             </View>
             <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-              <View style={styles.reportItem}>
-                <View>
-                  <View style={styles.reportItemLabel}>
-                    <CustomText size={13} title="ID: 932480" />
-                  </View>
-                  <TouchableOpacity style={styles.reportItemButton}>
-                    <CustomText
-                      title={`-77.031456, 38.4567
-Sunrise buildin g, Near Roton\nSquare, 23452`}
+              {(myEntryData || []).map((item, index) => {
+                const {id, latitude, longitude, address} = item || {};
+                if (index < 2) {
+                  return (
+                    <ReportItem
+                      key={id}
+                      onPress={() => onReportPress(item)}
+                      reportId={id}
+                      reportLocation={`${latitude}, ${longitude}`}
+                      address={address}
+                      {...item}
                     />
-                    <Icon
-                      name="chevron-right"
-                      size={26}
-                      color={Colors.primaryTextMuted}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <View style={styles.reportItem}>
-                <View>
-                  <View style={styles.reportItemLabel}>
-                    <CustomText size={13} title="ID: 932480" />
-                  </View>
-                  <TouchableOpacity style={styles.reportItemButton}>
-                    <CustomText
-                      title={`-77.031456, 38.4567
-Sunrise buildin g, Near Roton\nSquare, 23452`}
-                    />
-                    <Icon
-                      name="chevron-right"
-                      size={26}
-                      color={Colors.primaryTextMuted}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
+                  );
+                }
+              })}
             </ScrollView>
           </View>
         </View>

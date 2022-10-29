@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Colors} from '@common';
 import {CheckBox} from 'react-native-elements';
-import {RegularText, MediumText, CustomText} from '@Typography';
+import {CustomText} from '@Typography';
 
 const RadioButtonListItem = ({
   checked,
+  checkedIconOnly,
   index,
   listItemStyle,
   listItemCheckBoxStyle,
@@ -15,11 +16,13 @@ const RadioButtonListItem = ({
   onPress,
 }) => {
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => onPress(index)}
       style={[
         styles.container,
         listItemStyle,
         checked && styles.checkedStyles,
+        checkedIconOnly && styles.checkedIconStyles,
       ]}>
       <CheckBox
         containerStyle={[styles.checkBoxContainer, listItemCheckBoxStyle]}
@@ -27,7 +30,7 @@ const RadioButtonListItem = ({
         checkedIcon={'check-circle-outline'}
         uncheckedIcon="radio-button-unchecked"
         checkedColor={Colors.green}
-        checked={checked}
+        checked={checked || checkedIconOnly}
         onPress={() => onPress(index)}
         key={key}
       />
@@ -36,7 +39,7 @@ const RadioButtonListItem = ({
         color={Colors.primaryText}
         extraStyles={styles.checkBoxText}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -64,6 +67,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   checkedStyles: {borderColor: Colors.green, borderWidth: 1},
+  checkedIconStyles: {borderColor: Colors.transparent, borderWidth: 0},
   checkBoxText: {
     marginLeft: -4,
   },

@@ -24,6 +24,8 @@ import Profile from '../Profile';
 import ChangePassword from '../ChangePassword';
 import ForgotPassword from '../ForgotPassword';
 import AppMainNavigator from './AppTabsNav/AppTabsNav';
+import FAQ from '../FAQ';
+import SuccessScreen from '../SuccessScreen';
 
 const Stack = createStackNavigator();
 
@@ -108,6 +110,17 @@ const MainStack = () => (
         ),
       })}
     />
+    <Stack.Screen
+      name="FAQ"
+      component={FAQ}
+      options={({navigation, route, props}) => ({
+        title: Languages.faq,
+        headerLeft: () => (
+          <HeaderLeft backButton={true} navigation={navigation} />
+        ),
+      })}
+    />
+    <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
     <Stack.Screen
       name="UploadImages"
       component={UploadImages}

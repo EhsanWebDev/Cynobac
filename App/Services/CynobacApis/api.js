@@ -14,21 +14,21 @@ import {toastMessage} from '../alert/api';
 const getErrorText = error => error || 'Error completing request';
 
 const checkError = res => {
-  console.log("resError", res);
-  if (res.data.success === false ) {
-    throw new Error(getErrorText(res.data.message));
+  console.log('resError', res);
+  if (res?.data.success === false) {
+    throw new Error(getErrorText(res?.data.message));
   }
-  if (res == undefined || res.status === 500) {
+  if (res === undefined || res?.status === 500) {
     throw new Error(getErrorText('Something went wrong?'));
   }
-  if (res.status === 0) {
-    throw new Error(getErrorText(res.msg));
+  if (res?.status === 0) {
+    throw new Error(getErrorText(res?.msg));
   }
-  if (res.data.msg && res.data.msg.error) {
-    throw new Error(getErrorText(res.data.msg.error));
+  if (res?.data.msg && res?.data.msg.error) {
+    throw new Error(getErrorText(res?.data.msg.error));
   }
-  if (res.data.status === 0) {
-    throw new Error(getErrorText(res.data.msg ? res.data.msg : res.msg));
+  if (res?.data.status === 0) {
+    throw new Error(getErrorText(res?.data.msg ? res?.data.msg : res?.msg));
   }
 };
 /* ------------- Non-Auth(Apis) Functions  ------------- */
@@ -59,9 +59,10 @@ export const aboutUs = async payload => {
   return res.data;
 };
 export const submitReport = async payload => {
+  console.log({payload});
   const res = await postMultipart(apiConstants.SUBMIT_REPORT, payload, false);
   checkError(res);
-  return res.data;
+  return res?.data;
 };
 export const myEntry = async payload => {
   const res = await post(apiConstants.MY_ENTRY, payload, false);

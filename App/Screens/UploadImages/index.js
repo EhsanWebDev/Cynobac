@@ -1,23 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  View,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-  Image,
-} from 'react-native';
-// import { Container, Content } from 'native-base';
+import {View, SafeAreaView, TouchableOpacity, Image} from 'react-native';
+
 import {Languages, Images, Colors} from '@common';
 import {SolidButton} from '@Buttons';
-import {RegularText, XLText, TextWithImage, MediumText} from '@Typography';
 import styles from './styles';
-import UserActions from '../../Redux/User/reducer';
-import TextField from '../../Components/TextField';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import OtherActions from '../../Redux/Other/reducer';
+import Header from '../../Components/Header/Header';
+import {Icon} from 'react-native-elements';
 
 const UploadImages = ({navigation}) => {
   const other = useSelector(state => state.other);
@@ -86,12 +77,16 @@ const UploadImages = ({navigation}) => {
   const onPressPickImage = async () => {
     const imageResponse = await MultipleImagePicker.openPicker(defaultOptions);
     const imaged = [];
-    imageResponse.map(item => {
-      console.log('item', item);
+    imageResponse.map((item, index) => {
+      console.log(
+        '🚀 ~ file: index.js ~ line 92 ~ imageResponse.map ~ item',
+        item,
+      );
+
       imaged.push({
         uri: item.path,
-        name: 'image.jpg', 
-        type: 'image/jpeg'
+        name: `image${index}.jpg`,
+        type: 'image/jpeg',
         // name: item.fileName,
         // full_path: item.path,
         // type: item.type,
@@ -99,6 +94,7 @@ const UploadImages = ({navigation}) => {
         // size: item.size,
       });
     });
+    console.log({imaged});
     setImageData(imaged);
     console.log('response', imageResponse);
   };
@@ -115,34 +111,46 @@ const UploadImages = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
+      <View style={{marginTop: 20, marginBottom: 26, marginHorizontal: 20}}>
+        <Header onBackPress={navigation.goBack} title="Upload images" />
+      </View>
+      <View style={[styles.innerContainer]}>
         <TouchableOpacity
           onPress={onPressPickImage}
           style={styles.headingContainer}>
-          <XLText
+          <View>
+            <Icon name="add" size={32} color={Colors.primaryText} />
+          </View>
+          {/* <XLText
             textStyle={
               styles.headingText
-            }>{`${Languages.clickUploadImage}`}</XLText>
+            }>{`${Languages.clickUploadImage}`}</XLText> */}
         </TouchableOpacity>
-        {imageData.length > 0 && (
-          <View style={styles.flatListMainContainer}>
-            <FlatList
+        {(imageData || []).map((image, index) => (
+          <View key={index}>
+            <Image
+              source={{uri: image.uri}}
+              style={[styles.listImage, {marginLeft: index === 2 ? 0 : 12}]}
+            />
+          </View>
+        ))}
+      </View>
+      {imageData.length > 0 && (
+        <View style={styles.flatListMainContainer}>
+          {/* <FlatList
               data={imageData}
               renderItem={({item}) => <Item item={item} />}
               keyExtractor={item => item.id}
               extraData={imageData}
-            />
-            {/* <View style={styles.headerContainer}> */}
+            /> */}
 
-            <SolidButton
-              buttonStyle={styles.submit}
-              title={Languages.submit}
-              onPress={onPressSubmit}
-            />
-            {/* </View> */}
-          </View>
-        )}
-      </View>
+          <SolidButton
+            buttonStyle={styles.submit}
+            title={Languages.continue}
+            onPress={onPressSubmit}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };

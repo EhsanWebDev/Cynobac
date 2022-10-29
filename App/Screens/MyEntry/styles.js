@@ -4,7 +4,7 @@ import {Colors, Fonts} from '@common';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.lightGray,
+    backgroundColor: Colors.white,
   },
   tabBarMainContainer: {
     flexDirection: 'row',
@@ -16,8 +16,6 @@ export default StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 1,
-    borderRadius: 5,
   },
   tabBarText: {
     fontFamily: Fonts.type.bold,
@@ -27,7 +25,7 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 30,
     right: 15,
-    backgroundColor: Colors.red,
+    backgroundColor: Colors.green,
     width: 55,
     height: 55,
     borderRadius: 38,
@@ -40,7 +38,8 @@ export default StyleSheet.create({
   },
   listContainer: {
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
+    backgroundColor: Colors.white,
     // paddingBottom: 10
   },
   listItemContainer: {
@@ -65,6 +64,6 @@ export default StyleSheet.create({
   },
   listContentContainerStyle: {
     paddingBottom: 90,
-    flexGrow: 1
+    flexGrow: 1,
   },
 });

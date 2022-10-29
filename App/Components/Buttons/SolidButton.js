@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, Image} from 'react-native';
+import {StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Colors, Fonts} from '@common';
 import {CustomText} from '@Typography';
 import {Button} from 'native-base';
@@ -15,7 +15,7 @@ const SolidButton = ({
   outlined,
 }) => {
   return (
-    <Button
+    <TouchableOpacity
       disabled={disabled}
       block
       rounded
@@ -37,7 +37,7 @@ const SolidButton = ({
           outlined && styles.textOutlined,
         ]}
       />
-    </Button>
+    </TouchableOpacity>
   );
 };
 
@@ -63,9 +63,11 @@ const styles = StyleSheet.create({
       height: 3,
     },
     shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7,
+    shadowRadius: 2.65,
+    elevation: 4,
     borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   outlined: {
     backgroundColor: Colors.white,

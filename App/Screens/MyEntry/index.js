@@ -3,18 +3,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   View,
   SafeAreaView,
-  KeyboardAvoidingView,
-  ScrollView,
   TouchableOpacity,
-  Text,
   Image,
   FlatList,
   Animated,
 } from 'react-native';
-// import { Container, Content } from 'native-base';
 import {Languages, Images, Colors} from '@common';
-import {SolidButton} from '@Buttons';
-import {RegularText, XLText, TextWithImage, MediumText} from '@Typography';
+import {MediumText, CustomText} from '@Typography';
 import styles from './styles';
 import UserActions from '../../Redux/User/reducer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
@@ -22,9 +17,14 @@ import OtherActions from '../../Redux/Other/reducer';
 import HeaderLeft from '../../Components/HeaderLeft';
 import HeaderRight from '../../Components/HeaderRight';
 import EmptyList from '../../Components/EmptyList';
-const MyEntry = ({navigation}) => {
+import ReportItem from '../../Components/ReportItem/ReportItem';
+import Header from '../../Components/Header/Header';
+const MyEntry = ({navigation, route}) => {
+  const {params} = route || {};
+  const {fromDone, screenTitle} = params || {};
   const other = useSelector(state => state.other);
   const user = useSelector(state => state.user);
+  const {role} = user || {};
 
   const [pending, setPending] = useState([]);
   const [approved, setApproved] = useState([]);
@@ -79,11 +79,11 @@ const MyEntry = ({navigation}) => {
       const aa = array.sort(function (a, b) {
         var c = new Date(a.updated_at);
         var d = new Date(b.updated_at);
-        console.log('rrrrrr', c);
-        console.log('rrrrrr2111', d);
+        // console.log('rrrrrr', c);
+        // console.log('rrrrrr2111', d);
         return d - c;
       });
-      console.log('test', aa);
+      // console.log('test', aa);
       // var s = [other.myEntryData];
       // const aaaa = s.sort((a, b) => {
       //   console.log("aTest",a);
@@ -163,23 +163,23 @@ const MyEntry = ({navigation}) => {
               style={[
                 styles.tabBarContainer,
                 {
-                  backgroundColor: isFocused ? Colors.red : Colors.white,
+                  backgroundColor: isFocused ? Colors.green : Colors.white,
+                  borderRightWidth: index === 1 ? 0 : 1,
+                  borderLeftWidth: index === 1 ? 0 : 1,
+                  borderWidth: 1,
+                  borderTopRightRadius: index == 2 ? 10 : 0,
+                  borderBottomRightRadius: index === 2 ? 10 : 0,
+                  borderTopLeftRadius: index === 0 ? 10 : 0,
+                  borderBottomLeftRadius: index === 0 ? 10 : 0,
+                  borderColor: Colors.lightGray,
                 },
               ]}>
-              {/* <Text style={{opacity}}>{label}</Text> */}
-              {/* <Animated.Text
-                style={{
-                  opacity
-                }}>
-                {label}
-              </Animated.Text> */}
-              <Animated.Text
-                style={[
-                  styles.tabBarText,
-                  {color: isFocused ? Colors.white : Colors.red},
-                ]}>
-                {label}
-              </Animated.Text>
+              <CustomText
+                title={label}
+                color={isFocused ? Colors.white : Colors.primaryText}
+                size={13}
+                bold
+              />
             </TouchableOpacity>
           );
         })}
@@ -188,22 +188,13 @@ const MyEntry = ({navigation}) => {
   };
   const RenderNewEntry = ({item}) => {
     return (
-      <TouchableOpacity
+      <ReportItem
         onPress={() => onPressItem(item)}
-        style={styles.listItemContainer}>
-        <View>
-          <MediumText textStyle={styles.itemId}>
-            {`${Languages.id}: ${item.id}`}
-          </MediumText>
-          <MediumText textStyle={styles.itemLocation}>
-            {`${Languages.location}: ${item.latitude}, ${item.longitude}`}
-          </MediumText>
-          <MediumText textStyle={styles.itemLocation}>
-            {item.address}
-          </MediumText>
-        </View>
-        <Image style={styles.itemImage} source={Images.forwardArrowGray} />
-      </TouchableOpacity>
+        reportId={item?.id}
+        reportLocation={`${item.latitude}, ${item.longitude}`}
+        address={item.address}
+        {...item}
+      />
     );
   };
 
@@ -213,6 +204,7 @@ const MyEntry = ({navigation}) => {
     return (
       <View style={styles.listContainer}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={
             tabChangeIndex === 0
               ? pending
@@ -232,8 +224,21 @@ const MyEntry = ({navigation}) => {
   };
   return (
     <SafeAreaView style={styles.container}>
-      {/* <NavigationContainer> */}
+      <View style={{marginTop: 20, marginHorizontal: 20}}>
+        <Header
+          title={role === 'Admin' ? 'Entries' : 'My data'}
+          onBackPress={() => {
+            if (fromDone) {
+              navigation?.navigate('home');
+              return;
+            }
+            navigation?.goBack();
+          }}
+        />
+      </View>
+
       <Tab.Navigator
+        style={{marginTop: 12}}
         // initialRouteName={Languages.approved}
         tabBar={props => <MyTabBar {...props} />}>
         <Tab.Screen name={Languages.newEntry} component={NewEntry} />

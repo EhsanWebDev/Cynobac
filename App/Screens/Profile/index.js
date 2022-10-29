@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {View, SafeAreaView, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  Pressable,
+} from 'react-native';
 import {Languages, Images} from '@common';
 import {SolidButton} from '@Buttons';
 import {RegularText, MediumText, CustomText} from '@Typography';
@@ -15,6 +21,8 @@ import microValidator from 'micro-validator';
 import is from 'is_js';
 import AlertApi from '../../Services/alert';
 import Header from '../../Components/Header/Header';
+import {Button, Icon} from 'react-native-elements';
+import Colors from '../../Common/Colors';
 
 const dataGender = [Languages.male, Languages.female, Languages.other];
 const Profile = ({navigation}) => {
@@ -145,6 +153,22 @@ const Profile = ({navigation}) => {
       <KeyboardAwareScrollView>
         <View style={styles.innerContainer}>
           <Header title="Profile" onBackPress={() => navigation.goBack()} />
+          <View style={styles.avatarContainer}>
+            <Image
+              source={{
+                uri: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
+              }}
+              style={styles.avatar}
+            />
+            <Pressable style={styles.camIcon}>
+              <Icon
+                type="feather"
+                name="camera"
+                size={20}
+                color={Colors.white}
+              />
+            </Pressable>
+          </View>
           <View style={styles.inputContainer}>
             <TextField
               placeholder={Languages.enterFirstName}
@@ -238,7 +262,7 @@ const Profile = ({navigation}) => {
               title={Languages.submit}
               onPress={onPressSubmit}
             />
-            <View style={styles.bottomContainer}>
+            {/* <View style={styles.bottomContainer}>
               <TouchableOpacity
                 onPress={() => onPressChangePassword()}
                 style={styles.botttomViewContainer}>
@@ -261,17 +285,7 @@ const Profile = ({navigation}) => {
                   source={Images.forwardArrowGray}
                 />
               </TouchableOpacity>
-            </View>
-            {/* <SolidButton
-            buttonStyle={styles.submit}
-            title={Languages.logout}
-            onPress={onPressLogout}
-          />
-          <SolidButton
-            buttonStyle={styles.submit}
-            title={Languages.changePassword}
-            onPress={onPressChangePassword}
-          /> */}
+            </View> */}
           </View>
         </View>
       </KeyboardAwareScrollView>

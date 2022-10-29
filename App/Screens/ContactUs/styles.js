@@ -1,29 +1,31 @@
-import { StyleSheet } from 'react-native';
-import { Colors, Fonts } from '@common';
+import {StyleSheet} from 'react-native';
+import {Colors, Fonts} from '@common';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.lightGray,
+    backgroundColor: Colors.white,
   },
+  header: {marginTop: 20, marginBottom: 26, marginHorizontal: 20},
   headingText: {
     color: Colors.red,
     fontFamily: Fonts.type.light,
   },
-  headingContainer: {
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.mediumGray,
+  descContainer: {
+    marginHorizontal: 20,
+    backgroundColor: Colors.marble,
     padding: 20,
   },
-  aboutUsContainer:{
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: Colors.mediumGray,
-    marginTop: 10,
-    padding: 10,
-    margin: 10
+  iconContainer: {
+    backgroundColor: Colors.green,
+    padding: 12,
+    alignSelf: 'flex-start',
+    borderRadius: 12,
   },
-  aboutUsText:{
+  mtop: {marginTop: 32},
+  headingContainer: {},
+  aboutUsContainer: {},
+  aboutUsText: {
     color: Colors.gray,
   },
 });

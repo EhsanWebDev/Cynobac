@@ -22,10 +22,9 @@ function* startup() {
   if (auth && auth_token) {
     setToken(auth_token);
     console.log('role', role);
-    if (role === 'Public Testers') {
+
+    if (auth_token) {
       yield call(navigate, 'Home');
-    } else {
-      yield call(navigate, 'MyEntry');
     }
   } else {
     yield call(navigate, 'LoginRegistration');

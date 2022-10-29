@@ -57,7 +57,7 @@ const Login = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
         <View style={styles.innerContainer}>
           <Header
             title={Languages.signin}

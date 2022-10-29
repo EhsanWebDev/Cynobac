@@ -8,11 +8,18 @@ import {
   Platform,
   PermissionsAndroid,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 // import { Container, Content } from 'native-base';
 import {Languages, Images, Colors} from '@common';
 import {SolidButton} from '@Buttons';
-import {RegularText, XLText, TextWithImage, MediumText} from '@Typography';
+import {
+  RegularText,
+  XLText,
+  TextWithImage,
+  MediumText,
+  CustomText,
+} from '@Typography';
 import styles from './styles';
 import MapView from 'react-native-maps';
 import {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
@@ -21,6 +28,8 @@ import Geolocation from '@react-native-community/geolocation';
 // import Geolocation from 'react-native-geolocation-service';
 import OtherActions from '../../Redux/Other/reducer';
 import Geocoder from 'react-native-geocoding';
+import Header from '../../Components/Header/Header';
+Geocoder.init('AIzaSyA5dnMHxWSak2yswhuIVLOqyiJhUomHkC0');
 
 const SubmitReport = ({navigation}) => {
   const user = useSelector(state => state.user);
@@ -31,13 +40,14 @@ const SubmitReport = ({navigation}) => {
     latitudeDelta: 0.009,
     longitudeDelta: 0.009,
   });
-  const [address, setAddress] = useState();
+  const [address, setAddress] = useState(
+    '1600 Amphitheatre Pkwy Building 43, Mountain View, CA 94043, USA',
+  );
   const other = useSelector(state => state.other);
   const dispatch = useDispatch();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     dispatch(OtherActions.setSubmitReportData({}));
-    Geocoder.init('AIzaSyA5dnMHxWSak2yswhuIVLOqyiJhUomHkC0');
 
     Geolocation.getCurrentPosition(
       info => {
@@ -51,11 +61,8 @@ const SubmitReport = ({navigation}) => {
         });
         Geocoder.from(latitude, longitude)
           .then(json => {
-            // var addressComponent = json.results[0].address_components[0];
             var addressValue = json.results[0].formatted_address;
             setAddress(addressValue);
-            console.log(addressValue);
-            console.log(json);
           })
           .catch(error => console.log(error));
       },
@@ -66,7 +73,11 @@ const SubmitReport = ({navigation}) => {
       //   maximumAge: 10000,
       // },
     );
-  }, [dispatch]);
+    // return () => {
+    //   Geolocation.clearWatch(id);
+    //   Geolocation.stopObserving();
+    // };
+  }, [navigation, dispatch]);
 
   const onPressSubmit = () => {
     console.log('position', position);
@@ -82,11 +93,45 @@ const SubmitReport = ({navigation}) => {
     navigation.navigate('UploadImages');
     // setSubmitReportData
   };
+  // console.log({address});
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={{marginTop: 20, marginBottom: 26, marginHorizontal: 20}}>
+        <Header onBackPress={navigation.goBack} title="Select your location" />
+      </View>
+
       <View style={styles.container}>
-        <View style={styles.autocompleteContainer}>
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          // showsUserLocation={true}
+          // mapType={'satellite'}
+          showsUserLocation
+          showsMyLocationButton
+          style={styles.mapViewStyle}
+          region={position}
+
+          // initialRegion={position}
+          // currentLocation={true}
+          // showsMyLocationButton={true}
+        >
+          <Marker
+            coordinate={position}
+            onPress={e => {
+              const {nativeEvent} = e || {};
+              const {coordinate} = nativeEvent || {};
+              const {longitude, latitude} = coordinate || {};
+              Geocoder.from(latitude, longitude)
+                .then(json => {
+                  var addressValue = json.results[0].formatted_address;
+                  setAddress(addressValue);
+                  console.log({addressValue});
+                })
+                .catch(error => console.log(error));
+            }}
+          />
+        </MapView>
+        {/* <View style={styles.autocompleteContainer}>
           <GooglePlacesAutocomplete
             // currentLocation
             textInputProps={{
@@ -122,25 +167,43 @@ const SubmitReport = ({navigation}) => {
             }}
             onFail={error => console.error('errorPlace', error)}
           />
-        </View>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          // showsUserLocation={true}
-          mapType={'satellite'}
-          style={styles.mapViewStyle}
-          region={position}
-          // initialRegion={position}
-          // currentLocation={true}
-          // showsMyLocationButton={true}
-        >
-          <Marker coordinate={position} />
-        </MapView>
+        </View> */}
         {address && (
-          <SolidButton
-            buttonStyle={styles.submit}
-            title={Languages.submit}
-            onPress={onPressSubmit}
-          />
+          <View
+            style={{
+              flex: 0.32,
+              marginHorizontal: 20,
+              justifyContent: 'flex-end',
+              paddingBottom: 12,
+              marginTop: 22,
+            }}>
+            <CustomText
+              title="Your location"
+              bold
+              color={Colors.primaryTextMuted}
+              size={13}
+            />
+            <View
+              style={{
+                backgroundColor: Colors.inputBG,
+                paddingHorizontal: 16,
+                paddingVertical: 13,
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 12,
+                marginTop: 4,
+              }}>
+              <CustomText extraStyles={{flex: 0.75}} title={address} />
+              <TouchableOpacity style={{flex: 0.3, alignItems: 'flex-end'}}>
+                <CustomText title={'Change'} color={Colors.green} bold />
+              </TouchableOpacity>
+            </View>
+            <SolidButton
+              buttonStyle={styles.submit}
+              title={Languages.continue}
+              onPress={onPressSubmit}
+            />
+          </View>
         )}
       </View>
     </SafeAreaView>
