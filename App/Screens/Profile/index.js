@@ -1,15 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  Image,
-  Pressable,
-} from 'react-native';
-import {Languages, Images} from '@common';
+import {View, SafeAreaView} from 'react-native';
+import {Languages} from '@common';
 import {SolidButton} from '@Buttons';
-import {RegularText, MediumText, CustomText} from '@Typography';
+import {CustomText} from '@Typography';
 import styles from './styles';
 import UserActions from '../../Redux/User/reducer';
 import TextField from '../../Components/TextField';
@@ -19,10 +13,7 @@ import DatePickerModal from '.././../Components/DatePickerModal';
 import moment from 'moment';
 import microValidator from 'micro-validator';
 import is from 'is_js';
-import AlertApi from '../../Services/alert';
 import Header from '../../Components/Header/Header';
-import {Button, Icon} from 'react-native-elements';
-import Colors from '../../Common/Colors';
 
 const dataGender = [Languages.male, Languages.female, Languages.other];
 const Profile = ({navigation}) => {
@@ -117,10 +108,7 @@ const Profile = ({navigation}) => {
       },
     },
   };
-  const onPressSelectedDate = date => {
-    var dateFormate = moment(date).format('YYYY-MM-DD');
-    setSelectedDob(dateFormate);
-  };
+
   const handleChange = (key, text) => {
     if (key === 'dob') {
       text = moment(text).format('YYYY-MM-DD');
@@ -129,46 +117,16 @@ const Profile = ({navigation}) => {
     setFormData(formData);
     setErrors({});
   };
-  const onPressLogout = async () => {
-    const confirm = await AlertApi.confirm(
-      Languages.sureLogout,
-      Languages.okay,
-      Languages.cancel,
-    );
-
-    if (confirm) {
-      reset();
-    }
-  };
 
   const reset = () => {
     dispatch(UserActions.resetUser());
     navigation.navigate('LoginRegistration');
-  };
-  const onPressChangePassword = () => {
-    navigation.navigate('ChangePassword');
   };
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView>
         <View style={styles.innerContainer}>
           <Header title="Profile" onBackPress={() => navigation.goBack()} />
-          <View style={styles.avatarContainer}>
-            <Image
-              source={{
-                uri: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
-              }}
-              style={styles.avatar}
-            />
-            <Pressable style={styles.camIcon}>
-              <Icon
-                type="feather"
-                name="camera"
-                size={20}
-                color={Colors.white}
-              />
-            </Pressable>
-          </View>
           <View style={styles.inputContainer}>
             <TextField
               placeholder={Languages.enterFirstName}

@@ -110,7 +110,18 @@ const SubmitReport = ({navigation}) => {
           showsMyLocationButton
           style={styles.mapViewStyle}
           region={position}
-
+          onUserLocationChange={e => {
+            const {nativeEvent} = e || {};
+            const {coordinate} = nativeEvent || {};
+            const {longitude, latitude} = coordinate || {};
+            Geocoder.from(latitude, longitude)
+              .then(json => {
+                var addressValue = json.results[0].formatted_address;
+                setAddress(addressValue);
+                console.log({addressValue});
+              })
+              .catch(error => console.log(error));
+          }}
           // initialRegion={position}
           // currentLocation={true}
           // showsMyLocationButton={true}

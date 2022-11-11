@@ -19,7 +19,9 @@ import HeaderRight from '../../Components/HeaderRight';
 import EmptyList from '../../Components/EmptyList';
 import ReportItem from '../../Components/ReportItem/ReportItem';
 import Header from '../../Components/Header/Header';
+import moment from 'moment';
 const MyEntry = ({navigation, route}) => {
+  const A_MONTH = moment(new Date()).subtract(30, 'days');
   const {params} = route || {};
   const {fromDone, screenTitle} = params || {};
   const other = useSelector(state => state.other);
@@ -105,7 +107,14 @@ const MyEntry = ({navigation, route}) => {
           rejectedData.push(item);
         }
       });
-      setPending(pendindData);
+      const filteredPendingData = (pendindData || []).filter(entry => {
+        const {status, created_at} = entry || {};
+        if (status === 'Pending') {
+          return !!moment(created_at).isSameOrAfter(A_MONTH);
+        }
+        return false;
+      });
+      setPending(filteredPendingData);
       setApproved(approvedData);
       setRejected(rejectedData);
     }
@@ -198,7 +207,9 @@ const MyEntry = ({navigation, route}) => {
     );
   };
 
-  const renderItem = ({item}) => <RenderNewEntry item={item} />;
+  const renderItem = ({item, ...rest}) => (
+    <RenderNewEntry item={item} {...rest} />
+  );
 
   const NewEntry = () => {
     return (

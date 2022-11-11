@@ -6,6 +6,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
   },
+  header: {marginTop: 20, marginBottom: 26, marginHorizontal: 20},
   innerContainer: {
     marginHorizontal: 20,
     flexDirection: 'row',
@@ -52,5 +53,17 @@ export default StyleSheet.create({
   flatListMainContainer: {
     flex: 1,
     justifyContent: 'flex-end',
+  },
+  options: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    paddingVertical: 20,
+  },
+  option: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -26,6 +26,7 @@ target 'Cynobac' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+
   target 'CynobacTests' do
     inherit! :complete
     # Pods for testing

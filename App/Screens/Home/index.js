@@ -7,8 +7,12 @@ import styles from './styles';
 import {ArrowWithCircle, MenuIcon} from '../../../assets/SVGs';
 import ReportItem from '../../Components/ReportItem/ReportItem';
 import OtherActions from '../../Redux/Other/reducer';
+import moment from 'moment/moment';
+import Immutable from 'seamless-immutable';
 
 const Home = ({navigation}) => {
+  const A_MONTH = moment(new Date()).subtract(30, 'days');
+
   const dispatch = useDispatch();
   const store = useSelector(store => store);
   const {user, other} = store || {};
@@ -36,6 +40,17 @@ const Home = ({navigation}) => {
   const newEntries = (myEntryData || []).reduce(
     (total, item) => (item?.status === 'Pending' ? total + 1 : total + 0),
     0,
+  );
+  const filteredEntries = (myEntryData || []).filter(entry => {
+    const {status, created_at} = entry || {};
+    if (status === 'Pending') {
+      return !!moment(created_at).isSameOrAfter(A_MONTH);
+    }
+    return false;
+  });
+
+  const sorted = Immutable.asMutable(filteredEntries).sort(
+    (f, g) => new Date(g.created_at) - new Date(f.created_at),
   );
 
   return (
@@ -79,20 +94,18 @@ Submit new data`
               </TouchableOpacity>
             </View>
             <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-              {(myEntryData || []).map((item, index) => {
-                const {id, latitude, longitude, address} = item || {};
-                if (index < 2) {
-                  return (
-                    <ReportItem
-                      key={id}
-                      onPress={() => onReportPress(item)}
-                      reportId={id}
-                      reportLocation={`${latitude}, ${longitude}`}
-                      address={address}
-                      {...item}
-                    />
-                  );
-                }
+              {(sorted || []).map((item, index) => {
+                const {id, latitude, longitude, address, status} = item || {};
+                return (
+                  <ReportItem
+                    key={id}
+                    onPress={() => onReportPress(item)}
+                    reportId={id}
+                    reportLocation={`${latitude}, ${longitude}`}
+                    address={address}
+                    {...item}
+                  />
+                );
               })}
             </ScrollView>
           </View>

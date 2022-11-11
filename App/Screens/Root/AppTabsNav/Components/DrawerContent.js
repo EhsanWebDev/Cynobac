@@ -36,19 +36,11 @@ function DrawerContent({navigation, ...rest}) {
     navigation?.navigate(name, params);
   };
   const isAdmin = role === 'Admin';
-  console.log({isAdmin});
 
   return (
     <SafeAreaView style={styles.container} {...rest}>
       <View style={[styles.rowSB, styles.spaceMax]}>
         <View style={styles.row}>
-          <Avatar
-            size={40}
-            rounded
-            source={{
-              uri: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
-            }}
-          />
           <View style={styles.nameContainer}>
             <CustomText title={`${firstname} ${lastname}`} bold />
             <TouchableOpacity onPress={() => navigate('Profile')}>
