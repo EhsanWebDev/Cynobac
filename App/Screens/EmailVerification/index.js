@@ -20,8 +20,9 @@ const EmailVerification = ({navigation}) => {
 
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({code: ''});
   const [errors, setErrors] = useState({});
+  const [code, setCode] = useState('');
 
   const onPressSubmit = () => {
     const error = microValidator.validate(validationSchema, formData);
@@ -70,8 +71,10 @@ const EmailVerification = ({navigation}) => {
 
           <View style={styles.inputContainer}>
             <OTPInputView
+              autoFocusOnLoad
               codeInputFieldStyle={styles.maskInput}
               pinCount={6}
+              code={formData.code}
               onCodeChanged={code => handleChange('code', code)}
             />
             {errors?.code && (

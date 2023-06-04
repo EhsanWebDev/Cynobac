@@ -1,17 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  View,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform,
-  PermissionsAndroid,
-  Alert,
-  TouchableOpacity,
-} from 'react-native';
-// import { Container, Content } from 'native-base';
-import {Languages, Images, Colors} from '@common';
+import {View, SafeAreaView, Alert, TouchableOpacity} from 'react-native';
+
+import {Languages, Colors} from '@common';
 import {SolidButton} from '@Buttons';
 import {
   RegularText,
@@ -29,6 +20,7 @@ import Geolocation from '@react-native-community/geolocation';
 import OtherActions from '../../Redux/Other/reducer';
 import Geocoder from 'react-native-geocoding';
 import Header from '../../Components/Header/Header';
+import {Icon} from 'react-native-elements';
 Geocoder.init('AIzaSyA5dnMHxWSak2yswhuIVLOqyiJhUomHkC0');
 
 const SubmitReport = ({navigation}) => {
@@ -43,6 +35,8 @@ const SubmitReport = ({navigation}) => {
   const [address, setAddress] = useState(
     '1600 Amphitheatre Pkwy Building 43, Mountain View, CA 94043, USA',
   );
+  const [showMap, setShowMap] = useState(true);
+
   const other = useSelector(state => state.other);
   const dispatch = useDispatch();
 
@@ -66,7 +60,18 @@ const SubmitReport = ({navigation}) => {
           })
           .catch(error => console.log(error));
       },
-      error => Alert.alert('Error', JSON.stringify(error)),
+      error => {
+        console.log({error});
+        const {code} = error;
+        if (code === 2) {
+          Alert.alert(
+            'Error while getting location',
+            'Please turn on location from setting',
+          );
+          return;
+        }
+        Alert.alert('Error', JSON.stringify(error));
+      },
       // {
       //   enableHighAccuracy: true,
       //   timeout: 10000,
@@ -93,100 +98,152 @@ const SubmitReport = ({navigation}) => {
     navigation.navigate('UploadImages');
     // setSubmitReportData
   };
-  // console.log({address});
+
+  const onPressChange = () => {
+    setShowMap(false);
+    // setUsePlacesAddress(true);
+    // Geolocation.getCurrentPosition(
+    //   info => {
+    //     const {latitude, longitude} = info.coords;
+    //     setPosition({
+    //       latitude: latitude,
+    //       longitude: longitude,
+    //       latitudeDelta: 0.009,
+    //       longitudeDelta: 0.009,
+    //     });
+    //     Geocoder.from(latitude, longitude)
+    //       .then(json => {
+    //         console.log({json});
+    //         var addressValue = json.results[0].formatted_address;
+    //         setAddress(addressValue);
+    //       })
+    //       .catch(error => console.log(error));
+    //   },
+    //   error => Alert.alert('Error', JSON.stringify(error)),
+    //   // {
+    //   //   enableHighAccuracy: true,
+    //   //   timeout: 10000,
+    //   //   maximumAge: 10000,
+    //   // },
+    // );
+  };
+  const getMyLocation = () => {
+    Geolocation.getCurrentPosition(
+      info => {
+        const {latitude, longitude} = info.coords;
+        setPosition({
+          latitude: latitude,
+          longitude: longitude,
+          latitudeDelta: 0.009,
+          longitudeDelta: 0.009,
+        });
+        Geocoder.from(latitude, longitude)
+          .then(json => {
+            var addressValue = json.results[0].formatted_address;
+            setAddress(addressValue);
+          })
+          .catch(error => console.log(error));
+      },
+      error => Alert.alert('Error', JSON.stringify(error)),
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={{marginTop: 20, marginBottom: 26, marginHorizontal: 20}}>
-        <Header onBackPress={navigation.goBack} title="Select your location" />
+        <Header
+          onBackPress={() => navigation.navigate('home')}
+          title="Select your location"
+        />
       </View>
 
       <View style={styles.container}>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          // showsUserLocation={true}
-          // mapType={'satellite'}
-          showsUserLocation
-          showsMyLocationButton
-          style={styles.mapViewStyle}
-          region={position}
-          onUserLocationChange={e => {
-            const {nativeEvent} = e || {};
-            const {coordinate} = nativeEvent || {};
-            const {longitude, latitude} = coordinate || {};
-            Geocoder.from(latitude, longitude)
-              .then(json => {
-                var addressValue = json.results[0].formatted_address;
-                setAddress(addressValue);
-                console.log({addressValue});
-              })
-              .catch(error => console.log(error));
-          }}
-          // initialRegion={position}
-          // currentLocation={true}
-          // showsMyLocationButton={true}
-        >
-          <Marker
-            coordinate={position}
-            onPress={e => {
-              const {nativeEvent} = e || {};
-              const {coordinate} = nativeEvent || {};
-              const {longitude, latitude} = coordinate || {};
-              Geocoder.from(latitude, longitude)
-                .then(json => {
-                  var addressValue = json.results[0].formatted_address;
-                  setAddress(addressValue);
-                  console.log({addressValue});
-                })
-                .catch(error => console.log(error));
-            }}
+        {showMap ? (
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            style={styles.mapViewStyle}
+            region={position}>
+            <Marker
+              coordinate={position}
+              draggable
+              onPress={e => {
+                const {nativeEvent} = e || {};
+                const {coordinate} = nativeEvent || {};
+                const {longitude, latitude} = coordinate || {};
+                Geocoder.from(latitude, longitude)
+                  .then(json => {
+                    var addressValue = json.results[0].formatted_address;
+                    setAddress(addressValue);
+                    console.log({addressValue});
+                  })
+                  .catch(error => console.log(error));
+              }}
+            />
+          </MapView>
+        ) : (
+          <View style={styles.autocompleteContainer}>
+            <GooglePlacesAutocomplete
+              currentLocation
+              textInputProps={{
+                // value: address,
+                placeholderTextColor: Colors.lightGray,
+                returnKeyType: 'search',
+                borderWidth: 1,
+                borderColor: 'gray',
+              }}
+              placeholder={Languages.locateMyLocation}
+              fetchDetails
+              onPress={(data, details = null) => {
+                setAddress(details.formatted_address);
+                setPosition({
+                  latitude: details.geometry.location.lat,
+                  longitude: details.geometry.location.lng,
+                  latitudeDelta: 0.009,
+                  longitudeDelta: 0.009,
+                });
+                setShowMap(true);
+              }}
+              query={{
+                key: 'AIzaSyA5dnMHxWSak2yswhuIVLOqyiJhUomHkC0',
+                language: user.language,
+              }}
+              styles={{
+                description: {
+                  color: 'gray',
+                },
+                textInput: {
+                  height: 45,
+                  color: Colors.black,
+                },
+              }}
+              onFail={error => console.error('errorPlace', error)}
+            />
+          </View>
+        )}
+        <TouchableOpacity
+          onPress={getMyLocation}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            marginTop: 8,
+            marginRight: 20,
+          }}>
+          <CustomText
+            size={14}
+            title="Use my location"
+            extraStyles={{marginRight: 4}}
           />
-        </MapView>
-        {/* <View style={styles.autocompleteContainer}>
-          <GooglePlacesAutocomplete
-            // currentLocation
-            textInputProps={{
-              // value: address,
-              placeholderTextColor: Colors.lightGray,
-              returnKeyType: 'search',
-            }}
-            placeholder={Languages.locateMyLocation}
-            fetchDetails={true}
-            onPress={(data, details = null) => {
-              setAddress(details.formatted_address);
-              setPosition({
-                latitude: details.geometry.location.lat,
-                longitude: details.geometry.location.lng,
-                latitudeDelta: 0.009,
-                longitudeDelta: 0.009,
-              });
-              // 'details' is provided when fetchDetails = true
-              console.log(data, details);
-            }}
-            query={{
-              key: 'AIzaSyA5dnMHxWSak2yswhuIVLOqyiJhUomHkC0',
-              language: user.language,
-            }}
-            styles={{
-              description: {
-                color: Colors.lightGray,
-              },
-              textInput: {
-                height: 45,
-                color: Colors.black,
-              },
-            }}
-            onFail={error => console.error('errorPlace', error)}
-          />
-        </View> */}
+          <Icon name="my-location" color={Colors.green} size={18} />
+        </TouchableOpacity>
         {address && (
           <View
             style={{
-              flex: 0.32,
+              flex: 0.38,
               marginHorizontal: 20,
               justifyContent: 'flex-end',
               paddingBottom: 12,
-              marginTop: 22,
+              marginTop: 12,
             }}>
             <CustomText
               title="Your location"
@@ -201,11 +258,13 @@ const SubmitReport = ({navigation}) => {
                 paddingVertical: 13,
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginBottom: 12,
+                marginBottom: 16,
                 marginTop: 4,
               }}>
               <CustomText extraStyles={{flex: 0.75}} title={address} />
-              <TouchableOpacity style={{flex: 0.3, alignItems: 'flex-end'}}>
+              <TouchableOpacity
+                style={{flex: 0.25, alignItems: 'flex-end'}}
+                onPress={onPressChange}>
                 <CustomText title={'Change'} color={Colors.green} bold />
               </TouchableOpacity>
             </View>

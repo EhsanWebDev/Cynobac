@@ -19,6 +19,8 @@ const dataGender = [Languages.male, Languages.female, Languages.other];
 const Profile = ({navigation}) => {
   const user = useSelector(state => state.user);
 
+  console.log({user});
+
   const [selectedGender, setSelectedGender] = useState(false);
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
@@ -204,8 +206,6 @@ const Profile = ({navigation}) => {
               onChangeText={text => handleChange('city', text)}
               value={formData.city}
               error={errors.city && errors.city[0]}
-              showRightButton
-              rightIcon="chevron-down"
             />
             <TextField
               keyboardType="number-pad"

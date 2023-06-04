@@ -16,7 +16,12 @@ import Header from '../../Components/Header/Header';
 const Login = ({navigation}) => {
   const user = useSelector(state => state.user);
 
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    // email: 'laxib68386@ratedane.com',
+    // password: '825520',
+    email: '',
+    password: '',
+  });
   const [errors, setErrors] = useState({});
   const [showPass, setShowPass] = useState(false);
   const dispatch = useDispatch();

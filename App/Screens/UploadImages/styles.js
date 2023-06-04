@@ -12,6 +12,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
+    // justifyContent: 'space-evenly',
   },
   headingText: {
     color: Colors.red,
@@ -19,27 +20,28 @@ export default StyleSheet.create({
   },
   headingContainer: {
     backgroundColor: Colors.inputBG,
-    width: Dimensions.get('window').width / 3.8,
+    width: 100,
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
     marginVertical: 12,
+    // marginLeft: 20,
   },
   textStyle: {
     color: Colors.darkGray,
     marginVertical: 5,
   },
   submit: {
-    marginVertical: 15,
-    marginHorizontal: 15,
+    // marginVertical: 15,
+    marginHorizontal: 20,
   },
   listItem: {
     marginTop: 10,
   },
   listImage: {
     // maxWidth: Dimensions.get('window').width / 3,
-    width: Dimensions.get('window').width / 3.8,
+    width: 100,
     height: 100,
     borderRadius: 12,
     marginVertical: 12,
@@ -51,8 +53,10 @@ export default StyleSheet.create({
     // bottom: 10
   },
   flatListMainContainer: {
-    flex: 1,
+    // flex: 1,
     justifyContent: 'flex-end',
+    backgroundColor: 'white',
+    paddingVertical: 4,
   },
   options: {
     backgroundColor: 'white',
@@ -60,6 +64,7 @@ export default StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     paddingVertical: 20,
+    height: 120,
   },
   option: {
     flex: 1,

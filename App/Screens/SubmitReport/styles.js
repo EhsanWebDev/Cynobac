@@ -7,7 +7,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
   },
   autocompleteContainer: {
-    // flex: 1,
+    flex: 1,
     width: '95%',
     // height: 300,
     // position: 'absolute',
@@ -16,15 +16,15 @@ export default StyleSheet.create({
     zIndex: 1,
   },
   mapViewStyle: {
-    flex: 0.85,
+    flex: 0.75,
   },
   textStyle: {
     color: Colors.darkGray,
     marginVertical: 5,
   },
   submit: {
-    // margin: 30
-    marginTop: 20,
+    // flex: 1,
+    // margin: 30,
     // marginHorizontal: 15,
   },
 });

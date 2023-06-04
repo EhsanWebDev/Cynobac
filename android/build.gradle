@@ -33,8 +33,17 @@ buildscript {
 
 allprojects {
     repositories {
+        exclusiveContent {
+           filter {
+               includeGroup "com.facebook.react"
+           }
+           forRepository {
+               maven {
+                   url "$rootDir/../node_modules/react-native/android"
+               }
+           }
+       }
         all { ArtifactRepository repo ->
-              println repo.url.toString()
               if (repo.url.toString().startsWith("https://jcenter.bintray.com/")) {
                   project.logger.warn "Repository ${repo.url} removed."
                   remove repo

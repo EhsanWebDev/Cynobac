@@ -12,16 +12,17 @@ const ExpendableItem = ({
 }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.rowSB}>
-        <CustomText title={`Question #${questionCount}`} bold />
-        <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.rowSB}>
+          <CustomText title={`Question #${questionCount}`} bold />
+
           <Icon
             name={expended ? 'chevron-up' : 'chevron-down'}
             type="feather"
             color={Colors.primaryTextMuted}
           />
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
       {expended && (
         <CustomText
           extraStyles={styles.desc}

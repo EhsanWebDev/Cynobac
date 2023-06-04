@@ -15,7 +15,10 @@ const getErrorText = error => error || 'Error completing request';
 
 const checkError = res => {
   console.log('resError', res);
-  if (res?.data.success === false) {
+  if (
+    res?.data.success === false &&
+    res?.data?.message !== 'The email has already been taken.'
+  ) {
     throw new Error(getErrorText(res?.data.message));
   }
   if (res === undefined || res?.status === 500) {

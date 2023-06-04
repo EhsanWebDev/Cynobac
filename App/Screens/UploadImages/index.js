@@ -1,6 +1,13 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {View, SafeAreaView, TouchableOpacity, Image, Text} from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  Text,
+  ScrollView,
+} from 'react-native';
 
 import {Languages, Colors} from '@common';
 import {SolidButton} from '@Buttons';
@@ -52,7 +59,7 @@ const UploadImages = ({navigation}) => {
           type: 'image/jpeg',
         });
       });
-      setImageData(imaged);
+      setImageData([...imageData, ...imaged]);
     } catch (error) {}
   };
 
@@ -77,10 +84,10 @@ const UploadImages = ({navigation}) => {
   };
 
   const openModal = () => {
-    if ((imageData || []).length > 3) {
-      alert('You can upload four images');
-      return;
-    }
+    // if ((imageData || []).length > 3) {
+    //   alert('You can upload four images');
+    //   return;
+    // }
     open();
   };
 
@@ -90,21 +97,48 @@ const UploadImages = ({navigation}) => {
         <View style={styles.header}>
           <Header onBackPress={navigation.goBack} title="Upload images" />
         </View>
-        <View style={[styles.innerContainer]}>
-          <TouchableOpacity onPress={openModal} style={styles.headingContainer}>
-            <View>
-              <Icon name="add" size={32} color={Colors.primaryText} />
-            </View>
-          </TouchableOpacity>
-          {(imageData || []).map((image, index) => (
-            <View key={index}>
-              <Image
-                source={{uri: image.uri}}
-                style={[styles.listImage, {marginLeft: index === 2 ? 0 : 12}]}
-              />
-            </View>
-          ))}
-        </View>
+        <ScrollView>
+          <View style={[styles.innerContainer]}>
+            <TouchableOpacity
+              onPress={openModal}
+              style={styles.headingContainer}>
+              <View>
+                <Icon name="add" size={32} color={Colors.primaryText} />
+              </View>
+            </TouchableOpacity>
+            {(imageData || []).map((image, index) => {
+              console.log({index});
+              return (
+                <View key={index} style={{position: 'relative'}}>
+                  <Image
+                    source={{uri: image.uri}}
+                    style={[
+                      styles.listImage,
+                      {marginLeft: (index + 1) % 3 === 0 ? 0 : 14},
+                    ]}
+                  />
+                  <TouchableOpacity
+                    onPress={() => {
+                      const updatedImages = imageData.filter(
+                        (image, idx) => index !== idx,
+                      );
+                      setImageData(updatedImages);
+                    }}
+                    style={{
+                      position: 'absolute',
+                      top: 10,
+                      right: 0,
+                      backgroundColor: Colors.lightRed,
+                      borderRadius: 12,
+                      padding: 4,
+                    }}>
+                    <Icon name="close" size={12} color={Colors.white} />
+                  </TouchableOpacity>
+                </View>
+              );
+            })}
+          </View>
+        </ScrollView>
         {imageData.length > 0 && (
           <View style={styles.flatListMainContainer}>
             <SolidButton

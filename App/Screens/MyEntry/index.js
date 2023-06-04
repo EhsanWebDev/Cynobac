@@ -73,31 +73,6 @@ const MyEntry = ({navigation, route}) => {
 
     // updated_at
     if (other && other.myEntryData && other.myEntryData.length > 0) {
-      var array = [...other.myEntryData]; //[{id: 1, date:'2022-07-03T05:40:00.000000Z'}, {id: 2, date:'2022-07-04T11:47:56.000000Z'}];
-      // var array = [{id: 1, created_at:'2022-07-03T05:40:00.000000Z'}, {id: 2, created_at:'2022-07-04T11:47:56.000000Z'}, {id: 2, created_at:'2022-09-04T11:47:56.000000Z'}];
-
-      console.log('array', array);
-
-      const aa = array.sort(function (a, b) {
-        var c = new Date(a.updated_at);
-        var d = new Date(b.updated_at);
-        // console.log('rrrrrr', c);
-        // console.log('rrrrrr2111', d);
-        return d - c;
-      });
-      // console.log('test', aa);
-      // var s = [other.myEntryData];
-      // const aaaa = s.sort((a, b) => {
-      //   console.log("aTest",a);
-      //   console.log("bTest",b);
-      //     var c = new Date(a.date).getTime();
-      //     var d = new Date(b.date).getTime();
-      //      return c-d;
-      //   //       var d = new Date(b.date);
-      //   // return new Date(b.created_at) > new Date(a.created_at);
-      // });
-      // console.log("aaaa",aaaa);
-
       other.myEntryData.map(item => {
         if (item.status === 'Pending') {
           pendindData.push(item);
@@ -195,9 +170,12 @@ const MyEntry = ({navigation, route}) => {
       </View>
     );
   };
+
+  console.log({pending});
   const RenderNewEntry = ({item}) => {
     return (
       <ReportItem
+        key={item.id}
         onPress={() => onPressItem(item)}
         reportId={item?.id}
         reportLocation={`${item.latitude}, ${item.longitude}`}

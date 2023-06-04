@@ -37,8 +37,36 @@ function* login(res) {
 function* registration(res) {
   try {
     yield put(AppActions.loading(true));
+    const currentUserData = yield select(currentUser);
+    console.log({payload: res, currentUserData});
+    const {payload} = res;
+    const {email} = payload;
     const data = yield call(CynobacApis.registration, res.payload);
     console.log('datas', data);
+
+    if (data?.message === 'The email has already been taken.') {
+      res.payload = {
+        ...res.payload,
+        email,
+      };
+      // Send code again to same email
+      const data = yield call(CynobacApis.resendVerifyEmail, res.payload);
+
+      if (data.success) {
+        yield put(AppActions.loading(false));
+
+        yield put(AppActions.loading(false));
+        yield put(
+          Actions.setUser({
+            ...data.data,
+            password: res.payload.password,
+          }),
+        );
+        yield call(navigate, 'EmailVerification');
+      }
+
+      return;
+    }
     if (data.success) {
       yield put(AppActions.loading(false));
       yield put(
@@ -67,19 +95,24 @@ function* verifyEmail(res) {
     console.log('datas', data);
     if (data.success) {
       yield put(AppActions.loading(false));
-      setToken(data.access_token);
-      yield put(
-        Actions.setUser({
-          auth: true,
-          auth_token: data.access_token,
-          ...data.data,
-        }),
+      // setToken(data.access_token);
+      // yield put(
+      //   Actions.setUser({
+      //     auth: true,
+      //     auth_token: data.access_token,
+      //     ...data.data,
+      //   }),
+      // );
+      yield call(
+        AlertApi.alert,
+        'Your account registered successfully. Please login',
       );
-      if (data.data.role === 'Public Testers') {
-        yield call(navigate, 'Home');
-      } else {
-        yield call(navigate, 'MyEntry');
-      }
+      yield call(navigate, 'Login');
+      // if (data.data.role === 'Public Testers') {
+      //   yield call(navigate, 'Home');
+      // } else {
+      //   yield call(navigate, 'MyEntry');
+      // }
     }
   } catch (e) {
     console.log('errorinCatch', e);
@@ -135,6 +168,7 @@ function* changePassword(res) {
     if (data) {
       yield put(AppActions.loading(false));
       yield put(Actions.resetUser());
+
       yield call(navigate, 'LoginRegistration');
     }
   } catch (e) {
@@ -147,6 +181,10 @@ function* forgotPassword(res) {
     const data = yield call(CynobacApis.forgotPassword, res.payload);
     if (data) {
       yield put(AppActions.loading(false));
+      yield call(
+        AlertApi.alert,
+        'Your new password is sent to your email address.',
+      );
       yield call(navigate, 'Login');
     }
   } catch (e) {

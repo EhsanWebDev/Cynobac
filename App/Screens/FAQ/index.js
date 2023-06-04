@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
-import {StyleSheet, SafeAreaView, View, TouchableOpacity} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import Header from '../../Components/Header/Header';
 import styles from './styles';
 import {CustomText} from '@Typography';
-import {Icon} from 'react-native-elements';
-import Colors from '../../Common/Colors';
 import ExpendableItem from '../../Components/ExpendableItem/ExpendableItem';
 
 const FAQ = ({navigation}) => {

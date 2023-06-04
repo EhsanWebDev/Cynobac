@@ -30,6 +30,7 @@ const Registration = ({navigation}) => {
   };
   const onPressSubmit = () => {
     const error = microValidator.validate(validationSchema, formData);
+
     if (!is.empty(error)) {
       setErrors(error);
       return;
@@ -40,7 +41,7 @@ const Registration = ({navigation}) => {
       gender: dataGender[selectedGender],
       name: `${formData.firstname} ${formData.lastname}`,
     };
-    console.log('newData', newData);
+    // console.log('newData', newData);
 
     dispatch(UserActions.registration(newData));
     // navigation.navigate('EmailVerification');
@@ -94,11 +95,11 @@ const Registration = ({navigation}) => {
         errorMsg: Languages.cityError,
       },
     },
-    // zipcode: {
-    //   required: {
-    //     errorMsg: Languages.zipError,
-    //   },
-    // },
+    zipcode: {
+      required: {
+        errorMsg: Languages.zipError,
+      },
+    },
     job: {
       required: {
         errorMsg: Languages.jobError,
@@ -117,12 +118,6 @@ const Registration = ({navigation}) => {
     setFormData(formData);
     setErrors({});
   };
-
-  // gender: 'Gender',
-  // dob: 'Data of Birth',
-  // male: 'Male',
-  // female: 'Female',
-  // other: 'Other',
 
   return (
     <SafeAreaView style={styles.container}>
@@ -229,19 +224,20 @@ const Registration = ({navigation}) => {
               error={errors.address && errors.address[0]}
             />
             <TextField
-              placeholder={Languages.enterZipAndCity}
-              headingText={Languages.cityAndZip}
+              placeholder={Languages.enterCity}
+              headingText={Languages.city}
               onChangeText={text => handleChange('city', text)}
               value={formData.city}
               error={errors.city && errors.city[0]}
             />
-            {/* <TextField
+            <TextField
               keyboardType="number-pad"
+              placeholder={Languages.enterZip}
               headingText={Languages.zip}
               onChangeText={text => handleChange('zipcode', text)}
               value={formData.zipcode}
               error={errors.zipcode && errors.zipcode[0]}
-            /> */}
+            />
           </View>
 
           <SolidButton

@@ -7,7 +7,6 @@ import {GlobalStyles} from '@common';
 import ReduxPersist from '../../Utils/reduxPersist';
 import Actions from '../../Redux/Root/reducer';
 import {NativeBaseProvider} from 'native-base';
-import {Languages, Images, Colors} from '@common';
 
 export default () => {
   const loading = useSelector(state => state.app.loading);
@@ -18,6 +17,7 @@ export default () => {
     BackHandler.addEventListener('hardwareBackPress', function () {
       return true;
     });
+
     if (!ReduxPersist.active) {
       dispatch(Actions.startup());
     }
