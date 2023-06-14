@@ -72,7 +72,10 @@ const QuestionAndAnswer = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{marginTop: 20, marginBottom: 26, marginHorizontal: 20}}>
-        <Header onBackPress={navigation.goBack} title="Select your answers" />
+        <Header
+          onBackPress={navigation.goBack}
+          title={Languages.selectYourAnswers}
+        />
       </View>
       <ScrollView>
         <View style={{marginHorizontal: 20}}>

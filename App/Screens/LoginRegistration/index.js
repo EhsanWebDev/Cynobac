@@ -10,6 +10,10 @@ import {
   OnboardingSecondImg,
   OnboardingThirdImg,
 } from '../../../assets/SVGs';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const LoginRegistration = ({navigation}) => {
   const swiperRef = useRef();
@@ -26,9 +30,16 @@ const LoginRegistration = ({navigation}) => {
         onIndexChanged={index => setSlideIndex(index)}
         loop={false}
         style={styles.wrapper}
+        paginationStyle={{
+          position: 'absolute',
+          bottom: 16,
+        }}
         activeDotStyle={styles.activeDotStyles}>
         <View style={styles.slide1}>
-          <OnboardingFirstImg />
+          <View>
+            <OnboardingFirstImg />
+          </View>
+
           <View style={styles.slideText}>
             <CustomText
               title={Languages.slide1Heading}
@@ -74,11 +85,6 @@ const LoginRegistration = ({navigation}) => {
           </View>
         </View>
       </Swiper>
-      <TextWithImage
-        source={Images.forwardArrowWhite}
-        onPress={() => onPressButton('ContactUs')}>
-        {Languages.contactUs}
-      </TextWithImage>
       {slideIndex === 2 ? (
         <View style={styles.slideButtonContainer}>
           <SolidButton
@@ -104,7 +110,7 @@ const LoginRegistration = ({navigation}) => {
       <TouchableOpacity
         style={styles.skipButton}
         onPress={() => onPressButton('Login')}>
-        <CustomText title="Skip" />
+        <CustomText title={Languages.skip} />
       </TouchableOpacity>
     </SafeAreaView>
   );

@@ -22,7 +22,7 @@ const ContactUs = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Header onBackPress={navigation.goBack} title="Contact us" />
+        <Header onBackPress={navigation.goBack} title={Languages.contactUs} />
       </View>
       <ScrollView>
         <View style={styles.descContainer}>

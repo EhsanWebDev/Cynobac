@@ -1,5 +1,9 @@
 import {Platform, StyleSheet} from 'react-native';
 import {Colors, Fonts, GlobalStyles} from '@common';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
 
 export default StyleSheet.create({
   container: {
@@ -43,20 +47,25 @@ export default StyleSheet.create({
     marginTop: 35,
   },
   wrapper: {},
-  slide1: {},
-  slide2: {},
-  slide3: {},
+  slide1: {flex: 1},
+  slide2: {flex: 1},
+  slide3: {flex: 1},
   text: {},
   activeDotStyles: {
     height: 7,
     width: 24,
     backgroundColor: Colors.primaryText,
   },
-  slideText: {marginTop: 32, alignItems: 'center'},
+  slideText: {
+    alignItems: 'center',
+    flex: 1,
+    marginTop: 24,
+    backgroundColor: 'white',
+  },
   slideSubText: {
     textAlign: 'center',
-    marginTop: 12,
-    lineHeight: 28,
+    marginTop: 6,
+    lineHeight: 24,
     color: Colors.primaryTextMuted,
   },
   submit: {
@@ -71,11 +80,14 @@ export default StyleSheet.create({
   },
   skipButton: {
     position: 'absolute',
-    right: 30,
-    top: Platform.OS === 'android' ? 60 : 100,
+    right: widthPercentageToDP('6%'),
+    top:
+      Platform.OS === 'android'
+        ? heightPercentageToDP('6%')
+        : heightPercentageToDP('10%'),
   },
   continueButton: {
     marginHorizontal: GlobalStyles.Constants.sizes.lg,
-    marginBottom: 8,
+    marginBottom: 2,
   },
 });

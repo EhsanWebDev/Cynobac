@@ -79,7 +79,7 @@ const Settings = ({route, navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Header onBackPress={navigation.goBack} title="Settings" />
+        <Header onBackPress={navigation.goBack} title={Languages.settings} />
       </View>
       <View style={styles.container}>
         <View style={styles.headingContainer}>
@@ -98,7 +98,7 @@ const Settings = ({route, navigation}) => {
       </View>
       <SolidButton
         buttonStyle={{marginHorizontal: 20, marginBottom: 12}}
-        title={'Save changes'}
+        title={Languages.saveChanges}
         onPress={onLanguageSelect}
       />
     </SafeAreaView>

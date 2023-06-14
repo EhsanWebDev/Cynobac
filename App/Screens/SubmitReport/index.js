@@ -153,7 +153,7 @@ const SubmitReport = ({navigation}) => {
       <View style={{marginTop: 20, marginBottom: 26, marginHorizontal: 20}}>
         <Header
           onBackPress={() => navigation.navigate('home')}
-          title="Select your location"
+          title={Languages.selectYourLocation}
         />
       </View>
 
@@ -231,7 +231,7 @@ const SubmitReport = ({navigation}) => {
           }}>
           <CustomText
             size={14}
-            title="Use my location"
+            title={Languages.useMyLocation}
             extraStyles={{marginRight: 4}}
           />
           <Icon name="my-location" color={Colors.green} size={18} />
@@ -246,7 +246,7 @@ const SubmitReport = ({navigation}) => {
               marginTop: 12,
             }}>
             <CustomText
-              title="Your location"
+              title={Languages.yourLocation}
               bold
               color={Colors.primaryTextMuted}
               size={13}
@@ -261,11 +261,15 @@ const SubmitReport = ({navigation}) => {
                 marginBottom: 16,
                 marginTop: 4,
               }}>
-              <CustomText extraStyles={{flex: 0.75}} title={address} />
+              <CustomText extraStyles={{flex: 0.6}} title={address} />
               <TouchableOpacity
-                style={{flex: 0.25, alignItems: 'flex-end'}}
+                style={{flex: 0.4, alignItems: 'flex-end'}}
                 onPress={onPressChange}>
-                <CustomText title={'Change'} color={Colors.green} bold />
+                <CustomText
+                  title={Languages.change}
+                  color={Colors.green}
+                  bold
+                />
               </TouchableOpacity>
             </View>
             <SolidButton

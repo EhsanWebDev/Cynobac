@@ -45,12 +45,12 @@ const UploadImages = ({navigation}) => {
   };
   const onPressPickImage = async () => {
     try {
-      setVisible(false);
       const images = await ImagePicker.openPicker({
         multiple: true,
         mediaType: 'photo',
         ...defaultOptions,
       });
+      setVisible(false);
       const imaged = [];
       images.map((item, index) => {
         imaged.push({
@@ -59,6 +59,7 @@ const UploadImages = ({navigation}) => {
           type: 'image/jpeg',
         });
       });
+
       setImageData([...imageData, ...imaged]);
     } catch (error) {}
   };
@@ -95,7 +96,10 @@ const UploadImages = ({navigation}) => {
     <>
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Header onBackPress={navigation.goBack} title="Upload images" />
+          <Header
+            onBackPress={navigation.goBack}
+            title={Languages.uploadImages}
+          />
         </View>
         <ScrollView>
           <View style={[styles.innerContainer]}>

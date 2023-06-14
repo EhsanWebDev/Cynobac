@@ -215,7 +215,7 @@ const MyEntry = ({navigation, route}) => {
     <SafeAreaView style={styles.container}>
       <View style={{marginTop: 20, marginHorizontal: 20}}>
         <Header
-          title={role === 'Admin' ? 'Entries' : 'My data'}
+          title={role === 'Admin' ? 'Entries' : Languages.myData}
           onBackPress={() => {
             if (fromDone) {
               navigation?.navigate('home');

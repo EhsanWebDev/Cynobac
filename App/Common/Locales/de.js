@@ -37,9 +37,9 @@ export default {
   locateMyLocation: 'Locate My Location',
   clickUploadImage: 'Click / Upload Image',
   selectQAndAnswer: 'Select Q and Answer',
-  cynobatrialBloom: 'Q.1 Cynobatrial Bloom?',
-  substrate: 'Q.2 Substrate?',
-  weaterConditions: 'Q.2 Weater Conditions?',
+  cynobatrialBloom: 'Cynobatrial Bloom?',
+  substrate: 'Substrate?',
+  weaterConditions: 'Weater Conditions?',
   yes: 'Yes',
   no: 'No',
   rock: 'Rock',
@@ -55,5 +55,4 @@ export default {
   german: 'German',
   aboutUS: 'About US',
   phone: 'Phone:',
-
 };

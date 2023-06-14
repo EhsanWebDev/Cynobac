@@ -45,7 +45,7 @@ function DrawerContent({navigation, ...rest}) {
             <CustomText title={`${firstname} ${lastname}`} bold />
             <TouchableOpacity onPress={() => navigate('Profile')}>
               <CustomText
-                title="View profile"
+                title={Languages.viewProfile}
                 color={Colors.primaryTextMuted}
                 size={Fonts.size.small}
               />
@@ -61,14 +61,14 @@ function DrawerContent({navigation, ...rest}) {
       </View>
       <View>
         <NavItem
-          title="Home"
+          title={Languages.home}
           Icon={<HomeIcon />}
           onPress={() => navigate('home')}
         />
         {!isAdmin && (
           <>
             <NavItem
-              title="Submit new data"
+              title={Languages.submitNewData}
               Icon={<Icon type="feather" name="upload" />}
               onPress={() => navigate('SubmitReport')}
             />
@@ -76,20 +76,20 @@ function DrawerContent({navigation, ...rest}) {
         )}
 
         <NavItem
-          title={isAdmin ? 'Submissions' : 'My data'}
+          title={isAdmin ? Languages.submissions : Languages.myData}
           Icon={<Icon type="antdesign" name="folderopen" />}
           onPress={() =>
             navigate('MyEntry', {screenTitle: isAdmin ? 'Entries' : 'My data'})
           }
         />
         <NavItem
-          title="About project"
+          title={Languages.aboutProject}
           Icon={<Icon name="info-outline" />}
           onPress={() => navigate('AboutProject')}
         />
         {!isAdmin && (
           <NavItem
-            title="Contact us"
+            title={Languages.contactUs}
             Icon={<ChatIcon />}
             onPress={() => navigate('ContactUs')}
           />
@@ -101,14 +101,14 @@ function DrawerContent({navigation, ...rest}) {
           onPress={() => navigate('FAQ')}
         />
         <NavItem
-          title="Settings"
+          title={Languages.settings}
           Icon={<Icon type="antdesign" name="setting" />}
           onPress={() => navigate('Settings')}
         />
       </View>
       <View style={styles.signOut}>
         <NavItem
-          title="Sign out"
+          title={Languages.signout}
           Icon={<Icon type="feather" name="log-out" />}
           onPress={onPressLogout}
         />

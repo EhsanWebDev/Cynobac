@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {View, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native';
-import {Colors} from '@common';
+import {Colors, Languages} from '@common';
 import {CustomText} from '@Typography';
 import styles from './styles';
 import {ArrowWithCircle, MenuIcon} from '../../../assets/SVGs';
@@ -65,7 +65,7 @@ const Home = ({navigation}) => {
             <CustomText size={24} bold title={`Hello ${user.firstname},`} />
             <CustomText
               color={Colors.primaryTextMuted}
-              title={'Welcome back!'}
+              title={Languages.welcomeBack}
             />
           </View>
           <TouchableOpacity
@@ -76,10 +76,10 @@ const Home = ({navigation}) => {
               bold
               title={
                 isAdmin
-                  ? `New submissions: ${newEntries}
-Tap to review`
-                  : `Suspecting cyanobacteria?
-Submit new data`
+                  ? `${Languages.newSubmissions}: ${newEntries}
+${Languages.tapToReview}`
+                  : `${Languages.suspecting}
+${Languages.submitNewData}`
               }
             />
             <View style={{alignItems: 'flex-end'}}>
@@ -88,9 +88,12 @@ Submit new data`
           </TouchableOpacity>
           <View style={styles.seeAllContainer}>
             <View style={styles.seeAllBar}>
-              <CustomText size={19} title="Recently submitted" bold />
+              <CustomText size={19} title={Languages.recentlySubmitted} bold />
               <TouchableOpacity onPress={() => onPress('MyEntry')}>
-                <CustomText title="See all" color={Colors.primaryTextMuted} />
+                <CustomText
+                  title={Languages.seeAll}
+                  color={Colors.primaryTextMuted}
+                />
               </TouchableOpacity>
             </View>
             <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>

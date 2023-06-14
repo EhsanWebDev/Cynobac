@@ -3,6 +3,7 @@ import {SafeAreaView, View} from 'react-native';
 import Header from '../../Components/Header/Header';
 import styles from './styles';
 import {CustomText} from '@Typography';
+import {Languages} from '@common';
 import ExpendableItem from '../../Components/ExpendableItem/ExpendableItem';
 
 const FAQ = ({navigation}) => {
@@ -16,10 +17,7 @@ const FAQ = ({navigation}) => {
       </View>
       <View>
         <View style={{alignItems: 'center'}}>
-          <CustomText
-            title={`Key questions and answers
-             about Cynobac`}
-          />
+          <CustomText title={Languages.faqQ} />
         </View>
 
         <ExpendableItem

@@ -25,7 +25,7 @@ const INITIAL_STATE = Immutable({
   auth: false,
   auth_token: null,
   dateValidate: false,
-  language: 'en',
+  language: 'fr',
 });
 
 // /* ------------- Reducers ------------- */
